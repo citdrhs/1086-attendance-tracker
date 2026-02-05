@@ -2,7 +2,7 @@ const path = require("path");
 const express = require("express");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
-const db = require("./db");
+const db = require("./flasktest-db");
 
 const app = express();
 
