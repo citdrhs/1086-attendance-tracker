@@ -7,3 +7,9 @@ window.onload = function() {
     alert("You clicked");
   });
 }
+
+// Log out button functionality 
+document.getElementById("logoutBtn").addEventListener("click", async() => {
+  await fetch("/api/logut", { method:"POST"});
+  window.location.href = "auth.html";
+});
