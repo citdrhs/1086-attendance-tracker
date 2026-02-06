@@ -48,7 +48,10 @@ font-weight: 600;
 }
 
 .msg { min-height: 20px; margin: 0; color: #b8c7ff; }
+a {
+    color: plum;
+}
 .small {margin: 14px 0 0; font-size: 13px; opacity: .9; }
-.backBtn {color: yellow;}
+
 
 .hidden { display: none; }
