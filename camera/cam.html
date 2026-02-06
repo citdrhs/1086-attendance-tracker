@@ -1,0 +1,44 @@
+
+<html> 
+<head> 
+    <title>Test</title> 
+    <link rel="stylesheet" href="test.css"> 
+    <!--Credit:https://www.npmjs.com/package/html5-qrcode/v/2.3.8?activeTab=code (figure out how to properly credit)-->
+    <!--Credit: https://www.youtube.com/watch?v=19eo39lqpLM-->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+</head> 
+<body> 
+    <video id="cameraFeed" autoplay></video> 
+    <div id="reader"></div>
+    <div id="result"></div>
+     
+    <script>
+        const scanner = new Html5QrcodeScanner('reader', {/*creating instance of the scanner*/
+        qrbox: {/* how big the qr scanning feature should be*/
+            width: 250,
+            height: 250,
+        },
+        fps: 20, /*frames per second setting*/
+    });
+       
+
+        scanner.render(success, error); 
+
+        function success(result) { /*function which lets the user see if the scanning worked*/
+            
+            document.getElementById('result').innerHTML = `
+                <h2>Success!</h2>
+                <p><a href="${result}">${result}</a></p>
+            `;
+            scanner.clear();
+            
+            document.getElementById('reader').remove();
+        }
+
+        function error (err){ /*if the scanning did not work, it leads to the error in the log*/
+            console.error(err)
+        }
+        </script>
+</body> 
+</html>
+
