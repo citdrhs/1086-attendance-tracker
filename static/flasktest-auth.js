@@ -5,6 +5,8 @@ const submitBtn = document.getElementById("submitBtn");
 const form = document.getElementById("form");
 const msg = document.getElementById("msg");
 const title = document.getElementById("title");
+const checked = document.querySelectorAll('input[name="subteam"]:checked');
+const subteams = Array.from(checked).map(cb => cb.value);
 
 let mode = "login"; // or "signup"
 
