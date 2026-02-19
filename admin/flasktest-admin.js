@@ -93,17 +93,17 @@ function render() {
     : `<tr><td colspan="5" class="empty">No at-risk members — great work.</td></tr>`;
 }
 
-// mock data ( TO BE REMOVEF WHEN CONNECTED TO BACKEND FLASK)
+// mock data ( TO BE REMOVED WHEN CONNECTED TO BACKEND FLASK)
 
 function getMockData() {
   return [
-    { name: 'Aatish Iyer',           grade: 10, subteam: 'Programming', type: 'Rookie',  actual_n: 5,  risk: true  },
+    { name: 'Aatish Iyer',           grade: 10, subteam: 'Fabrication', type: 'Rookie',  actual_n: 5,  risk: true  },
     { name: 'Aditi Inamdar',         grade: 10, subteam: 'Business',    type: 'Rookie',  actual_n: 8,  risk: false },
-    { name: 'Ibrahim Alnaqshabandi', grade: 11, subteam: 'Mechanical',  type: 'Veteran', actual_n: 9,  risk: false },
+    { name: 'Ibrahim Alnaqshabandi', grade: 11, subteam: 'Impact',  type: 'Veteran', actual_n: 9,  risk: false },
     { name: 'Nidhira Palakolanu',    grade: 11, subteam: 'CAD',         type: 'Veteran', actual_n: 7,  risk: false },
-    { name: 'Ishant Mekala',          grade: 11, subteam: 'Electrical',  type: 'Veteran', actual_n: 10, risk: false },
-    { name: 'Wuyou Zhan',            grade: 10, subteam: 'Programming', type: 'Rookie',  actual_n: 4,  risk: true  },
+    { name: 'Ishant Mekala',          grade: 11, subteam: 'Media',  type: 'Veteran', actual_n: 10, risk: false },
+    { name: 'Wuyou Zhan',            grade: 10, subteam: 'Fabrication', type: 'Rookie',  actual_n: 4,  risk: true  },
     { name: 'Yagna Patel',           grade: 11, subteam: 'Media',       type: 'Veteran', actual_n: 8,  risk: false },
-    { name: 'Yathu Suryavanshi',     grade: 10,  subteam: 'Scouting',    type: 'Rookie',  actual_n: 6,  risk: true  },
+    { name: 'Yathu Suryavanshi',     grade: 10,  subteam: 'Strategy',    type: 'Rookie',  actual_n: 6,  risk: true  },
   ];
 }
