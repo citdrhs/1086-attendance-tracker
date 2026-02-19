@@ -3,58 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile - Blue Cheese Robotics</title>
+    <title>1086 Attendance Tracker - Blue Cheese Robotics</title>
     <link rel="stylesheet" href="flasktest-style.css">
-    <link rel="stylesheet" href="flasktest-auth.css"> </head>
-    <script src="flasktest-account.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">Blue Cheese Robotics</div>
             <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html" class="nav-link active">Home</a></li>
                 <li><a href="flasktest-information.html" class="nav-link">Information</a></li>
+                <li><a href="camera/flasktest-camera.html" class="nav-link">Camera</a></li>
                 <li><a href="flasktest-auth.html" class="nav-link">Login/Signup</a></li>
-                <li><a href="flasktest-account.html" class="nav-link active">Account</a></li>
+                <li><a href="flasktest-account.html" class="nav-link">Account</a></li>
+                <li><a href="admin/flasktest-admin.html" class="nav-link">Admin Panel</a></li>
             </ul>
         </div>
-        <main class="main-content">
-            <div class="card">
-                <h1 id="profileTitle">Your Profile</h1>
-                <div id="profileView" class="form">
-                    <div class="info-group">
-                        <label>Name: <span id="display-name"></span></label>
-                    </div>
-                    <div class="info-group">
-                        <label>Email: <span id="display-email"></span></label>
-                    </div>
-                    <div class="info-group">
-                        <label>Status: <span id="display-type"></span></label>
-                    </div>
-                    <div class="info-group">
-                        <label>Subteam: <span id="display-subteam"></span></label>
-                    </div>
-                    
-                    <hr style="border: 0; border-top: 1px solid #22335f; margin: 10px 0;">
-                    
-                    <h3>Update Information</h3>
-                <label>
-                    New Password
-                    <input id="edit-password" type="password" placeholder="Leave blank to keep current">
-                </label>  
-
-                <button id="updateBtn" class="primary">Update Profile</button>
-                
-                <p id="msg" class="msg"></p>
-            </div>
-        </div>
-
-                </div>
-            </div>
-        </main>
-       
     </nav>
 
-    
+
+    <main class="main-content">
+        <div class="card">
+            <h1 id="profileTitle">Your Profile</h1>
+            <div id="profileView" class="form">
+                <div class="info-group">
+                    <label>Name: <span id="display-name"></span></label>
+                </div>
+                <div class="info-group">
+                    <label>Email: <span id="display-email"></span></label>
+                </div>
+                <div class="info-group">
+                    <label>Status: <span id="display-type"></span></label>
+                </div>
+                <div class="info-group">
+                    <label>Subteam: <span id="display-subteam"></span></label>
+                </div>
+                
+                <hr style="border: 0; border-top: 1px solid #22335f; margin: 10px 0;">
+                
+                <h3>Update Information</h3>
+            <label>
+                New Password
+                <input id="edit-password" type="password" placeholder="Leave blank to keep current">
+            </label>  
+
+            <button id="updateBtn" class="primary">Update Profile</button>
+            
+            <p id="msg" class="msg"></p>
+        </div>
+    </main>
+
+            </div>
+        </div>
+    </main>
 </body>
 </html>
