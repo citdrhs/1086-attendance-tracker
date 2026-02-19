@@ -82,5 +82,3 @@ msg.textContent = "Network error. Is the server running?";
 });
 
 setMode("login");
-
-signupOnly.forEach(el.classList.add("hidden"));
