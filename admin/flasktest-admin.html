@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Admin 1086</title>
+<link rel="stylesheet" href="flasktest-style.css">
+</head>
+<body>
+    <script src="flasktest-admin.js"></script>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="login-box">
+    <img src="logo.png" alt="Blue Cheese Robotics Logo" class="login-logo">
+    <h1>Admin</h1>
+    <p>1086 Robotics</p>
+    <p class="err" id="err">Incorrect password. Please Try again.</p>
+    <label class="field-label">Password</label>
+    <input type="password" id="pw" placeholder="Enter password" />
+    <button onclick="login()">Enter →</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header>
+    <div class="brand">
+      <img src="logo.png" alt="Blue Cheese Robotics Logo" class="brand img">
+    </div>
+    <div class="tabs">
+      <button class="tab active" onclick="tab('members',this)">Members</button>
+      <button class="tab" onclick="tab('atrisk',this)">At-Risk</button>
+    </div>
+    <div class="header-right">
+      <button class="logout" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <select id="fSub" onchange="filter()">
+      <option value="">All Subteams</option>
+      <option>Mechanical</option><option>Electrical</option><option>Programming</option>
+      <option>CAD</option><option>Business</option><option>Media</option>
+      <option>Scouting</option><option>Safety</option>
+    </select>
+    <select id="fType" onchange="filter()">
+      <option value="">Veteran & Rookie</option>
+      <option value="Veteran">Veteran</option>
+      <option value="Rookie">Rookie</option>
+    </select>
+    <input id="fSearch" placeholder="Search name..." oninput="filter()" style="width:180px">
+  </div>
+
+  <div class="content">
+
+    <!-- MEMBERS -->
+    <div id="sec-members" class="section active">
+      <div class="card">
+        <div class="card-head"><h2>All Members</h2></div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Grade</th>
+                <th>Subteam</th>
+                <th>Type</th>
+                <th>Meetings Attended</th>
+              </tr>
+            </thead>
+            <tbody id="tMembers"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- AT-RISK -->
+    <div id="sec-atrisk" class="section">
+      <div class="card">
+        <div class="card-head">
+          <h2>At-Risk Members</h2>
+          <span>Sorted by severity</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Subteam</th>
+                <th>Type</th>
+                <th>Meetings Attended</th>
+                <th>Risk Level</th>
+              </tr>
+            </thead>
+            <tbody id="tRisk"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
