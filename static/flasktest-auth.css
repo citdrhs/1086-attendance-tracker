@@ -76,3 +76,8 @@ a {
     gap: 8px;
     font-size: 14px;
 }
+
+/* different content in sign up vs login tab */
+.hidden {
+    display: none;
+}
