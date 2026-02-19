@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Login / Sign Up</title>
+        <link rel="stylesheet" href="/static/flasktest-auth.css" />
+    </head>
+<body>
+    <main class="card">
+        <h1 id="title">Welcome</h1>
+
+        <div class="tabs">
+            <button id="tabLogin" class="tab active" type="button">Login</button> 
+            <button id="tabSignup" class="tab" type="button">Sign Up</button> 
+        </div>
+
+        <form id="form" class="form">
+            <label>
+                 Email
+                 <input id="email" type="email" autocomplete="email" required/>
+             </label>
+             <label>
+                Password
+                <input id="password" type="password" autocomplete="password" required/>
+            </label>
+            <label>
+                Name
+                <input id="name" type="text" autocomplete="name" required/>
+            </label>
+            <label>
+                Subteam
+                <input id="subteam" type="text" autocomplete="subteam" required/>
+            </label>
+            <label>
+                Veteran or Rookie
+                <input id="member-type" type="text" autocomplete="member-type" required/>
+            </label>
+
+            <button id="submitBtn" class="primary" type="submit">Login</button>
+            <p id="msg" class="msg" aria-live="polite"></p>
+        </form>
+
+        <p id="backBtn" class="small">
+            <a href="index.html">Back to home</a>
+        </p>
+    </main>
+    <script src="/static/flasktest-auth.js"></script>
+</body>
+</html>
