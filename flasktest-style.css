@@ -1,7 +1,24 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-}
+    margin: 0;
+    min-height: 100vh;
+  
+    background-image: url("team_photo.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  
+    display: flex;
+    flex-direction: column;
+  }
+  
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: -1;
+  }
+  
 
 /* Navbar */
 .navbar {
@@ -55,25 +72,36 @@ body {
 }
 
 .hero-section {
+    max-width: 500px;
+    margin: auto;
+    padding: 32px;
+    border-radius: 24px;
+  
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+  
+    box-shadow: 0 30px 60px rgba(0,0,0,0.25);
     text-align: center;
-    padding: 2rem;
-}
-
+  }
+  
+ /* images */
 .logo {
     width: 300px;
     margin-bottom: 2rem;
 }
 
+
 .title {
-    font-size: 2.5rem;
+    font-size: 32px;
     color: #1e3a8a;
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
 }
 
 .subtitle {
     font-size: 1.25rem;
     color: #64748b;
     margin-bottom: 2rem;
+    opacity: 0.8px
 }
 
 /* Buttons */
