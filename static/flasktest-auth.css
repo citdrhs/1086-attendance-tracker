@@ -81,3 +81,7 @@ a {
 .hidden {
     display: none;
 }
+
+.signup-only {
+    display: none;
+}
