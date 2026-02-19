@@ -85,3 +85,19 @@ a {
 .signup-only {
     display: none;
 }
+
+/* Vet or Rookie Styling */
+select {
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    color: #0f172a;
+    width: 100%;
+    font-size: 14px;
+}
+
+select:focus {
+    outline: none;
+    border-color: #facc15; 
+}
