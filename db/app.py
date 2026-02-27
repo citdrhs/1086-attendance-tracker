@@ -12,19 +12,6 @@ from sqlalchemy.sql import func
 app = Flask(__name__)
 
 
-# if __name__ == "__main__":
-#     app.run(debug=True)
-
-
-# programming
-# build
-# cad
-# advocacy
-# impact
-# outreach
-# media
-# fabrication
-
 
 # setting the base directory to the current file's directory
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -39,119 +26,139 @@ app.config['SQLALCHEMY_TRACK_NOTIFICATIONS'] = False
 # storing database object
 db = SQLAlchemy(app)
 
-# creating a table model as a class
-class Programming(db.Model):
+# outdated template
+# class Test(db.Model):
+#     # creating the columns, with datatypes and constraints
+#     uid = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
+#     firstname = db.Column(db.String(50), nullable = False)
+#     lastname = db.Column(db.String(50), nullable = False)
+#     email = db.Column(db.String(100), unique = True, nullable = False)
+#     status = db.Column(db.String(20), nullable = False)
+#     created_at = db.Column(db.DateTime(timezone = True), server_default = func.now())
+
+#     # gives each object a string representation, for debugging purposes (not necessary)
+#     def __repr__(self):
+#         return f"< Member {self.firstname} >" 
+
+
+
+class PrimarySubteam(db.Model):
     # creating the columns, with datatypes and constraints
-    uid = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
+    __tablename__ = "p_subteam"
+
+    p_subteam_id = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
+    p_subteam_name = db.Column(db.String(50), nullable = False)
+
+
+
+class SecondarySubteam(db.Model):
+    # creating the columns, with datatypes and constraints
+    __tablename__ = "s_subteam"
+
+    s_subteam_id = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
+    s_subteam_name = db.Column(db.String(50), nullable = False)
+
+
+
+class Member(db.Model):
+    # creating the columns, with datatypes and constraints
+    __tablename__ = "member"
+
+    member_id = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
     firstname = db.Column(db.String(50), nullable = False)
     lastname = db.Column(db.String(50), nullable = False)
-    email = db.Column(db.String(100), unique = True, nullable = False)
-    status = db.Column(db.String(20), nullable = False)
-    created_at = db.Column(db.DateTime(timezone = True), server_default = func.now())
+    status = db.Column(db.String(50), nullable = False,)
+    type = db.Column(db.String(50), nullable = False,)
 
-    # gives each object a string representation, for debugging purposes (not necessary)
-    def __repr__(self):
-        return f"< Member {self.firstname} >"
 
-class Build(db.Model):
+
+class TeamMember(db.Model):
     # creating the columns, with datatypes and constraints
-    uid = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
-    firstname = db.Column(db.String(50), nullable = False)
-    lastname = db.Column(db.String(50), nullable = False)
-    email = db.Column(db.String(100), unique = True, nullable = False)
-    status = db.Column(db.String(20), nullable = False)
-    created_at = db.Column(db.DateTime(timezone = True), server_default = func.now())
+    __tablename__ = "team_member"
 
-    # gives each object a string representation, for debugging purposes (not necessary)
-    def __repr__(self):
-        return f"< Member {self.firstname} >"
+    uuid = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
+    p_subteam_id = db.Column(db.Integer, db.ForeignKey("p_subteam.p_subteam_id"))
+    s_subteam_id = db.Column(db.Integer, db.ForeignKey("s_subteam.s_subteam_id"))
+    member_id = db.Column(db.Integer, db.ForeignKey("member.member_id"))
 
-class Cad(db.Model):
+
+
+class Veteran(db.Model):
     # creating the columns, with datatypes and constraints
-    uid = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
-    firstname = db.Column(db.String(50), nullable = False)
-    lastname = db.Column(db.String(50), nullable = False)
-    email = db.Column(db.String(100), unique = True, nullable = False)
-    status = db.Column(db.String(20), nullable = False)
-    created_at = db.Column(db.DateTime(timezone = True), server_default = func.now())
+    __tablename__ = "veteran"
 
-    # gives each object a string representation, for debugging purposes (not necessary)
-    def __repr__(self):
-        return f"< Member {self.firstname} >"
+    uuid = db.Column(db.Integer, db.ForeignKey("team_member.uuid"), primary_key = True)
 
-class Advocacy(db.Model):
+
+    
+class Rookie(db.Model):
     # creating the columns, with datatypes and constraints
-    uid = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
-    firstname = db.Column(db.String(50), nullable = False)
-    lastname = db.Column(db.String(50), nullable = False)
-    email = db.Column(db.String(100), unique = True, nullable = False)
-    status = db.Column(db.String(20), nullable = False)
-    created_at = db.Column(db.DateTime(timezone = True), server_default = func.now())
+    __tablename__ = "rookie"
 
-    # gives each object a string representation, for debugging purposes (not necessary)
-    def __repr__(self):
-        return f"< Member {self.firstname} >"
+    uuid = db.Column(db.Integer, db.ForeignKey("team_member.uuid"), primary_key = True)
 
-class Impact(db.Model):
+
+
+class InSeason(db.Model):
     # creating the columns, with datatypes and constraints
-    uid = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
-    firstname = db.Column(db.String(50), nullable = False)
-    lastname = db.Column(db.String(50), nullable = False)
-    email = db.Column(db.String(100), unique = True, nullable = False)
-    status = db.Column(db.String(20), nullable = False)
-    created_at = db.Column(db.DateTime(timezone = True), server_default = func.now())
+    __tablename__ = "fulltime"
 
-    # gives each object a string representation, for debugging purposes (not necessary)
-    def __repr__(self):
-        return f"< Member {self.firstname} >"
+    uuid = db.Column(db.Integer, db.ForeignKey("team_member.uuid"), primary_key = True)
 
-class Outreach(db.Model):
+
+    
+class OffSeason(db.Model):
     # creating the columns, with datatypes and constraints
-    uid = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
-    firstname = db.Column(db.String(50), nullable = False)
-    lastname = db.Column(db.String(50), nullable = False)
-    email = db.Column(db.String(100), unique = True, nullable = False)
-    status = db.Column(db.String(20), nullable = False)
-    created_at = db.Column(db.DateTime(timezone = True), server_default = func.now())
+    __tablename__ = "parttime"
 
-    # gives each object a string representation, for debugging purposes (not necessary)
-    def __repr__(self):
-        return f"< Member {self.firstname} >"
+    uuid = db.Column(db.Integer, db.ForeignKey("team_member.uuid"), primary_key = True)
 
-class Media(db.Model):
+
+
+class Log(db.Model):
     # creating the columns, with datatypes and constraints
-    uid = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
-    firstname = db.Column(db.String(50), nullable = False)
-    lastname = db.Column(db.String(50), nullable = False)
-    email = db.Column(db.String(100), unique = True, nullable = False)
-    status = db.Column(db.String(20), nullable = False)
+    __tablename__ = "scanning_log"
+
+    uuid = db.Column(db.Integer, db.ForeignKey("team_member.uuid"), primary_key = True)
     created_at = db.Column(db.DateTime(timezone = True), server_default = func.now())
 
-    # gives each object a string representation, for debugging purposes (not necessary)
-    def __repr__(self):
-        return f"< Member {self.firstname} >"
 
-class Fabrication(db.Model):
-    # creating the columns, with datatypes and constraints
-    uid = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
-    firstname = db.Column(db.String(50), nullable = False)
-    lastname = db.Column(db.String(50), nullable = False)
-    email = db.Column(db.String(100), unique = True, nullable = False)
-    status = db.Column(db.String(20), nullable = False)
-    created_at = db.Column(db.DateTime(timezone = True), server_default = func.now())
+# Just in case:
+    # firstname = db.Column(db.String(50), db.ForeignKey("member.firstname"))
+    # lastname = db.Column(db.String(50), db.ForeignKey("member.lastname"))
+    # status = db.Column(db.String(50), db.ForeignKey("member.status"))
+    # type = db.Column(db.String(50), db.ForeignKey("member.type"))
 
-    # gives each object a string representation, for debugging purposes (not necessary)
-    def __repr__(self):
-        return f"< Member {self.firstname} >"
 
 
 # *** Note: run the following
-    # set FLASK_APP=app.py
-    # python -m flask shell
-    # db.create_all()
+# set FLASK_APP=app.py
+# python -m flask shell
+
+# db.create_all()
+    
+# programming = PrimarySubteam(p_subteam_name="programming");
+# build = PrimarySubteam(p_subteam_name="build");
+# cad = PrimarySubteam(p_subteam_name="cad");
+# advocacy = PrimarySubteam(p_subteam_name="advocacy");
+# impact = PrimarySubteam(p_subteam_name="impact");
+# outreach = PrimarySubteam(p_subteam_name="outreach");
+# media = PrimarySubteam(p_subteam_name="media");
+
+# programming2 = SecondarySubteam(s_subteam_name="programming");
+# build2 = SecondarySubteam(s_subteam_name="build");
+# cad2 = SecondarySubteam(s_subteam_name="cad");
+# advocacy2 = SecondarySubteam(s_subteam_name="advocacy");
+# impact2 = SecondarySubteam(s_subteam_name="impact");
+# outreach2 = SecondarySubteam(s_subteam_name="outreach");
+# media2 = SecondarySubteam(s_subteam_name="media");
+
+# db.session.add_all([programming, build, cad, advocacy, impact, outreach, media])
+# db.session.add_all([programming2, build2, cad2, advocacy2, impact2, outreach2, media2])
+# db.session.commit()
 
 
-# I don't know what this does for now so I commented it out.
+
     
 # @app.route("/")
 # def hello():
