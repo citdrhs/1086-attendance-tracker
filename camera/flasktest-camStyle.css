@@ -11,3 +11,47 @@
     transform: translateX(-50%);
     
 }
+
+/* Navbar */
+.navbar {
+    font-size: 16px;
+    background-color: #1e3a8a;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.nav-brand {
+    color: #fbbf24;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 1rem 0;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 1rem 0;
+}
+
+.nav-link:hover {
+    color: #fbbf24;
+}
+
+.nav-link.active {
+    color: #fbbf24;
+    border-bottom: 3px solid #fbbf24;
+}
