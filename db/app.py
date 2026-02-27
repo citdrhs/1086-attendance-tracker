@@ -12,31 +12,6 @@ from sqlalchemy.sql import func
 app = Flask(__name__)
 
 
-# if __name__ == "__main__":
-#     app.run(debug=True)
-
-
-# programming
-# build
-# cad
-# advocacy
-# impact
-# outreach
-# media
-# fabrication
-
-# programming = Subteam(subteam_name="programming");
-# build = Subteam(subteam_name="build");
-# cad = Subteam(subteam_name="cad");
-# advocacy = Subteam(subteam_name="advocacy");
-# impact = Subteam(subteam_name="impact");
-# outreach = Subteam(subteam_name="outreach");
-# media = Subteam(subteam_name="media");
-# fabrication = Subteam(subteam_name="fabrication");
-
-# db.session.add_all([programming, build, cad, advocacy, impact, outreach, media, fabrication])
-# db.session.commit()
-
 
 # setting the base directory to the current file's directory
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -67,12 +42,21 @@ db = SQLAlchemy(app)
 
 
 
-class Subteam(db.Model):
+class PrimarySubteam(db.Model):
     # creating the columns, with datatypes and constraints
-    __tablename__ = "subteam"
+    __tablename__ = "p_subteam"
 
-    subteam_id = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
-    subteam_name = db.Column(db.String(50), nullable = False)
+    p_subteam_id = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
+    p_subteam_name = db.Column(db.String(50), nullable = False)
+
+
+
+class SecondarySubteam(db.Model):
+    # creating the columns, with datatypes and constraints
+    __tablename__ = "s_subteam"
+
+    s_subteam_id = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
+    s_subteam_name = db.Column(db.String(50), nullable = False)
 
 
 
@@ -93,7 +77,8 @@ class TeamMember(db.Model):
     __tablename__ = "team_member"
 
     uuid = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
-    subteam_id = db.Column(db.Integer, db.ForeignKey("subteam.subteam_id"))
+    p_subteam_id = db.Column(db.Integer, db.ForeignKey("p_subteam.p_subteam_id"))
+    s_subteam_id = db.Column(db.Integer, db.ForeignKey("s_subteam.s_subteam_id"))
     member_id = db.Column(db.Integer, db.ForeignKey("member.member_id"))
 
 
@@ -114,7 +99,7 @@ class Rookie(db.Model):
 
 
 
-class Fulltime(db.Model):
+class InSeason(db.Model):
     # creating the columns, with datatypes and constraints
     __tablename__ = "fulltime"
 
@@ -122,7 +107,7 @@ class Fulltime(db.Model):
 
 
     
-class Parttime(db.Model):
+class OffSeason(db.Model):
     # creating the columns, with datatypes and constraints
     __tablename__ = "parttime"
 
@@ -146,28 +131,34 @@ class Log(db.Model):
 
 
 
-
 # *** Note: run the following
-    # set FLASK_APP=app.py
-    # python -m flask shell
+# set FLASK_APP=app.py
+# python -m flask shell
 
-    # db.create_all()
+# db.create_all()
+    
+# programming = PrimarySubteam(p_subteam_name="programming");
+# build = PrimarySubteam(p_subteam_name="build");
+# cad = PrimarySubteam(p_subteam_name="cad");
+# advocacy = PrimarySubteam(p_subteam_name="advocacy");
+# impact = PrimarySubteam(p_subteam_name="impact");
+# outreach = PrimarySubteam(p_subteam_name="outreach");
+# media = PrimarySubteam(p_subteam_name="media");
 
-    # programming = Subteam(subteam_name="programming");
-    # build = Subteam(subteam_name="build");
-    # cad = Subteam(subteam_name="cad");
-    # advocacy = Subteam(subteam_name="advocacy");
-    # impact = Subteam(subteam_name="impact");
-    # outreach = Subteam(subteam_name="outreach");
-    # media = Subteam(subteam_name="media");
-    # fabrication = Subteam(subteam_name="fabrication");
+# programming2 = SecondarySubteam(s_subteam_name="programming");
+# build2 = SecondarySubteam(s_subteam_name="build");
+# cad2 = SecondarySubteam(s_subteam_name="cad");
+# advocacy2 = SecondarySubteam(s_subteam_name="advocacy");
+# impact2 = SecondarySubteam(s_subteam_name="impact");
+# outreach2 = SecondarySubteam(s_subteam_name="outreach");
+# media2 = SecondarySubteam(s_subteam_name="media");
 
-    # db.session.add_all([programming, build, cad, advocacy, impact, outreach, media, fabrication])
-    # db.session.commit()
+# db.session.add_all([programming, build, cad, advocacy, impact, outreach, media])
+# db.session.add_all([programming2, build2, cad2, advocacy2, impact2, outreach2, media2])
+# db.session.commit()
 
 
 
-# I don't know what this does for now so I commented it out.
     
 # @app.route("/")
 # def hello():
