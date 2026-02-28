@@ -9,6 +9,11 @@ from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
+# importing dotenv
+from dotenv import load_dotenv
+
+load_dotenv()
+
 app = Flask(__name__)
 
 
@@ -20,7 +25,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 # configuration keys for SQLAlchemy, the first is for specifying which database to connect to
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/postgres'
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI")
 app.config['SQLALCHEMY_TRACK_NOTIFICATIONS'] = False
 
 # storing database object
