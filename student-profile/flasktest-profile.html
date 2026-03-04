@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Account Profile</title>
+<link rel="stylesheet" href="flasktest-profile.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="logo">CITDRHS</div>
+    <button class="logout">Logout</button>
+</header>
+
+<div class="container">
+
+    <div class="profile-card">
+
+        <h2>Account Profile</h2>
+
+        <form id="profileForm">
+
+            <label>Username</label>
+            <input type="text" id="username">
+
+            <label>Email</label>
+            <input type="email" id="email">
+
+            <label>Phone Number</label>
+            <input type="text" id="phone">
+
+            <label>Discord ID</label>
+            <input type="text" id="discord">
+
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Enter new password">
+
+            <label>Status</label>
+            <select id="status">
+                <option value="rookie">Rookie</option>
+                <option value="veteran">Veteran</option>
+            </select>
+
+            <label>Subteam</label>
+            <select id="subteam">
+                <option>Fabrication</option>
+                <option>CAD</option>
+                <option>Media</option>
+                <option>Impact</option>
+                <option>Strategy</option>
+                <option>Business</option>
+            </select>
+
+            <button type="submit" class="save-btn">Save Changes</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="profile.js"></script>
+
+</body>
+</html>

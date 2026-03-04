@@ -1,0 +1,76 @@
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f4f4;
+    margin:0;
+}
+
+.topbar{
+    background:#4b3f92;
+    color:white;
+    padding:15px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-weight:bold;
+    font-size:20px;
+}
+
+.logout{
+    background:#f4b400;
+    border:none;
+    padding:8px 15px;
+    cursor:pointer;
+    border-radius:4px;
+}
+
+.container{
+    display:flex;
+    justify-content:center;
+    margin-top:50px;
+}
+
+.profile-card{
+    background:white;
+    width:420px;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0px 5px 15px rgba(0,0,0,0.15);
+}
+
+.profile-card h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:600;
+}
+
+input, select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border-radius:5px;
+    border:1px solid #ccc;
+}
+
+.save-btn{
+    margin-top:25px;
+    width:100%;
+    padding:12px;
+    background:#4b3f92;
+    color:white;
+    border:none;
+    font-size:16px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.save-btn:hover{
+    background:#372f6d;
+}
