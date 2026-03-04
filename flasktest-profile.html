@@ -9,45 +9,52 @@
 
 <body>
 
-<header class="navbar">
-    <div class="logo">CITDRHS</div>
-    <a href="flasktest-auth.html">
-        <button class="logout">Logout</button>
-    </a>
-    
-</header>
-
-<div class="page">
-
 <div class="profile-card">
 
 <h2>Account Profile</h2>
 
-<form id="profileForm">
-
+<div class="profile-field">
 <label>Username</label>
-<input type="text" id="username">
+<span id="usernameText">avani123</span>
+<input id="usernameInput" type="text" value="avani123" hidden>
+<button onclick="editField('username')">Edit</button>
+</div>
 
+<div class="profile-field">
 <label>Email</label>
-<input type="email" id="email">
+<span id="emailText">avani@email.com</span>
+<input id="emailInput" type="text" value="avani@email.com" hidden>
+<button onclick="editField('email')">Edit</button>
+</div>
 
+<div class="profile-field">
 <label>Phone Number</label>
-<input type="text" id="phone">
+<span id="phoneText">804-555-1234</span>
+<input id="phoneInput" type="text" value="804-555-1234" hidden>
+<button onclick="editField('phone')">Edit</button>
+</div>
 
+<div class="profile-field">
 <label>Discord ID</label>
-<input type="text" id="discord">
+<span id="discordText">avani#2341</span>
+<input id="discordInput" type="text" value="avani#2341" hidden>
+<button onclick="editField('discord')">Edit</button>
+</div>
 
-<label>Password</label>
-<input type="password" id="password">
-
+<div class="profile-field">
 <label>Status</label>
-<select id="status">
-<option value="rookie">Rookie</option>
-<option value="veteran">Veteran</option>
+<span id="statusText">Rookie</span>
+<select id="statusInput" hidden>
+<option>Rookie</option>
+<option>Veteran</option>
 </select>
+<button onclick="editField('status')">Edit</button>
+</div>
 
+<div class="profile-field">
 <label>Subteam</label>
-<select id="subteam">
+<span id="subteamText">Fabrication</span>
+<select id="subteamInput" hidden>
 <option>Fabrication</option>
 <option>CAD</option>
 <option>Media</option>
@@ -55,11 +62,7 @@
 <option>Strategy</option>
 <option>Business</option>
 </select>
-
-<button type="submit" class="save-btn">Save Changes</button>
-
-</form>
-
+<button onclick="editField('subteam')">Edit</button>
 </div>
 
 </div>

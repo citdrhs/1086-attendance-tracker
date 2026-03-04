@@ -94,12 +94,14 @@ form.addEventListener("submit", async (e) => {
     }
 
     msg.textContent = "Success! Redirecting...";
-    window.location.href = "index.html";
+    window.location.href = "flasktest-profile.html";
 
   } catch (err) {
     msg.textContent = "Network error. Is server running?";
   }
 });
+
+
 
 
 // ---------------- DEFAULT MODE ON LOAD ----------------

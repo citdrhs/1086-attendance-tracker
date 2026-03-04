@@ -1,15 +1,19 @@
 body{
     font-family: Arial, Helvetica, sans-serif;
-    background:#f4f6fb;
+    background: #003971;
     margin:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     }
     
-    /* NAVBAR */
+    /* TOP BAR (same as dashboard) */
     
     .navbar{
     background:#0b1f4d;
     color:white;
-    padding:15px 40px;
+    padding:14px 40px;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -17,25 +21,23 @@ body{
     
     .logo{
     font-weight:bold;
-    font-size:18px;
     letter-spacing:1px;
     }
     
     .logout{
     background:#d4af37;
     border:none;
-    padding:8px 14px;
+    padding:6px 14px;
     border-radius:4px;
     cursor:pointer;
     font-weight:600;
     }
     
-    /* PAGE LAYOUT */
+    /* PAGE CENTER */
     
     .page{
     display:flex;
     justify-content:center;
-    align-items:center;
     margin-top:60px;
     }
     
@@ -47,6 +49,7 @@ body{
     width:420px;
     border-radius:10px;
     box-shadow:0 6px 18px rgba(0,0,0,0.15);
+    border-top:5px solid #d4af37;
     }
     
     .profile-card h2{
@@ -55,43 +58,48 @@ body{
     color:#0b1f4d;
     }
     
-    /* FORM */
+    /* PROFILE ROW */
     
-    label{
+    .profile-field{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:14px;
+    }
+    
+    .profile-field label{
+    width:130px;
     font-weight:600;
-    display:block;
-    margin-top:14px;
+    color:#0b1f4d;
     }
     
-    input, select{
-    width:100%;
-    padding:10px;
-    margin-top:6px;
-    border-radius:6px;
-    border:1px solid #d0d0d0;
-    font-size:14px;
+    .profile-field span{
+    flex:1;
+    color:#333;
     }
     
-    input:focus, select:focus{
-    outline:none;
-    border-color:#d4af37;
-    }
+    /* EDIT BUTTON */
     
-    /* BUTTON */
-    
-    .save-btn{
-    width:100%;
-    margin-top:22px;
-    padding:12px;
+    .profile-field button{
     background:#0b1f4d;
     color:white;
     border:none;
-    border-radius:6px;
-    font-size:15px;
+    padding:5px 10px;
+    border-radius:4px;
     cursor:pointer;
+    font-size:12px;
     }
     
-    .save-btn:hover{
-    background:#081737;
+    .profile-field button:hover{
+    background:#071633;
+    }
+    
+    /* INPUTS WHEN EDITING */
+    
+    input, select{
+    flex:1;
+    padding:6px;
+    border-radius:4px;
+    border:1px solid #ccc;
     }
     
