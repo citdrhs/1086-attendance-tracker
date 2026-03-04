@@ -1,76 +1,97 @@
 body{
-    font-family: Arial, sans-serif;
-    background:#f4f4f4;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f4f6fb;
     margin:0;
-}
-
-.topbar{
-    background:#4b3f92;
+    }
+    
+    /* NAVBAR */
+    
+    .navbar{
+    background:#0b1f4d;
     color:white;
     padding:15px 40px;
     display:flex;
     justify-content:space-between;
     align-items:center;
-}
-
-.logo{
+    }
+    
+    .logo{
     font-weight:bold;
-    font-size:20px;
-}
-
-.logout{
-    background:#f4b400;
+    font-size:18px;
+    letter-spacing:1px;
+    }
+    
+    .logout{
+    background:#d4af37;
     border:none;
-    padding:8px 15px;
-    cursor:pointer;
+    padding:8px 14px;
     border-radius:4px;
-}
-
-.container{
+    cursor:pointer;
+    font-weight:600;
+    }
+    
+    /* PAGE LAYOUT */
+    
+    .page{
     display:flex;
     justify-content:center;
-    margin-top:50px;
-}
-
-.profile-card{
+    align-items:center;
+    margin-top:60px;
+    }
+    
+    /* PROFILE CARD */
+    
+    .profile-card{
     background:white;
+    padding:35px;
     width:420px;
-    padding:30px;
     border-radius:10px;
-    box-shadow:0px 5px 15px rgba(0,0,0,0.15);
-}
-
-.profile-card h2{
+    box-shadow:0 6px 18px rgba(0,0,0,0.15);
+    }
+    
+    .profile-card h2{
     text-align:center;
-    margin-bottom:20px;
-}
-
-label{
-    display:block;
-    margin-top:15px;
+    margin-bottom:25px;
+    color:#0b1f4d;
+    }
+    
+    /* FORM */
+    
+    label{
     font-weight:600;
-}
-
-input, select{
+    display:block;
+    margin-top:14px;
+    }
+    
+    input, select{
     width:100%;
     padding:10px;
-    margin-top:5px;
-    border-radius:5px;
-    border:1px solid #ccc;
-}
-
-.save-btn{
-    margin-top:25px;
+    margin-top:6px;
+    border-radius:6px;
+    border:1px solid #d0d0d0;
+    font-size:14px;
+    }
+    
+    input:focus, select:focus{
+    outline:none;
+    border-color:#d4af37;
+    }
+    
+    /* BUTTON */
+    
+    .save-btn{
     width:100%;
+    margin-top:22px;
     padding:12px;
-    background:#4b3f92;
+    background:#0b1f4d;
     color:white;
     border:none;
-    font-size:16px;
     border-radius:6px;
+    font-size:15px;
     cursor:pointer;
-}
-
-.save-btn:hover{
-    background:#372f6d;
-}
+    }
+    
+    .save-btn:hover{
+    background:#081737;
+    }
+    
