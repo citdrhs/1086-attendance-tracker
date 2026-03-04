@@ -55,3 +55,18 @@ alert("Error updating profile");
 }
 
 });
+
+//adding editing credentials functionality
+function editField(field){
+    let text = document.getElementById(field + "Text");
+    let input = document.getElementById(field + "Input");
+    if(input.style.display === "none"){
+        input.style.display = "inline-block";
+        text.style.display = "none";
+    }else{
+        text.textContent = input.value;
+        input.style.display = "none";
+        text.style.display = "inline";
+    }
+    }
+    
