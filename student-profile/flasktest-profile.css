@@ -1,0 +1,108 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background: #003971;
+    margin:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    }
+    
+    /* TOP BAR (same as dashboard) */
+    
+    .navbar{
+    background:#0b1f4d;
+    color:white;
+    padding:14px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    }
+    
+    .logo{
+    font-weight:bold;
+    letter-spacing:1px;
+    }
+    
+    .logout{
+    background:#d4af37;
+    border:none;
+    padding:6px 14px;
+    border-radius:4px;
+    cursor:pointer;
+    font-weight:600;
+    }
+    
+    /* PAGE CENTER */
+    
+    .page{
+    display:flex;
+    justify-content:center;
+    margin-top:60px;
+    }
+    
+    /* PROFILE CARD */
+    
+    .profile-card{
+    background:white;
+    padding:45px;
+    width:520px;
+    border-radius:10px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.15);
+    border-top:5px solid #d4af37;
+    }
+    
+    .profile-card h2{
+    text-align:center;
+    margin-bottom:25px;
+    color:#0b1f4d;
+    }
+    
+    /* PROFILE ROW */
+    
+    .profile-field{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:14px;
+    }
+    
+    .profile-field label{
+    width:130px;
+    font-weight:600;
+    color:#0b1f4d;
+    }
+    
+    .profile-field span{
+    flex:1;
+    color:#333;
+    }
+    
+    /* EDIT BUTTON */
+    
+    .profile-field button{
+    background:#0b1f4d;
+    color:white;
+    border:none;
+    padding:5px 10px;
+    border-radius:4px;
+    cursor:pointer;
+    font-size:12px;
+    }
+    
+    .profile-field button:hover{
+    background:#071633;
+    }
+    
+    /* INPUTS WHEN EDITING */
+    
+    input, select{
+    flex:1;
+    padding:6px;
+    border-radius:4px;
+    border:1px solid #ccc;
+    }
+
+    /* back button */
+    .small {margin: 14px 0 0; font-size: 13px; opacity: .9; }
+    
