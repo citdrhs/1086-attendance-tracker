@@ -2,6 +2,10 @@
 
 import os
 
+# importing postgres database adapter
+
+import psycopg2
+
 # importing flask and it's related functions
 from flask import Flask, render_template, request, url_for, redirect
 
@@ -11,6 +15,11 @@ from sqlalchemy.sql import func
 
 # importing Flask-Migrate
 from flask_migrate import Migrate
+
+# importing some stuff for dropping tables (testing)
+from sqlalchemy.engine.reflection import Inspector
+from sqlalchemy.schema import DropConstraint, DropTable, MetaData, Table, ForeignKeyConstraint
+from flask_sqlalchemy import SQLAlchemy
 
 # importing dotenv
 from dotenv import load_dotenv
@@ -63,12 +72,12 @@ class PrimarySubteam(db.Model):
 
 
 
-class SecondarySubteam(db.Model):
-    # creating the columns, with datatypes and constraints
-    __tablename__ = "s_subteam"
+# class SecondarySubteam(db.Model):
+#     # creating the columns, with datatypes and constraints
+#     __tablename__ = "s_subteam"
 
-    s_subteam_id = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
-    s_subteam_name = db.Column(db.String(50), nullable = False)
+#     s_subteam_id = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
+#     s_subteam_name = db.Column(db.String(50), nullable = False)
 
 
 
@@ -80,19 +89,19 @@ class Member(db.Model):
     name = db.Column(db.String(50), nullable = False)
     email = db.Column(db.String(100), nullable = False)
     password = db.Column(db.String(100), nullable = False)
+    p_subteam_id = db.Column(db.Integer, db.ForeignKey("p_subteam.p_subteam_id"), unique = True)
     status = db.Column(db.String(50), nullable = False)
-    type = db.Column(db.String(50))
 
 
 
-class TeamMember(db.Model):
-    # creating the columns, with datatypes and constraints
-    __tablename__ = "team_member"
+# class TeamMember(db.Model):
+#     # creating the columns, with datatypes and constraints
+#     __tablename__ = "team_member"
 
-    uuid = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
-    p_subteam_id = db.Column(db.Integer, db.ForeignKey("p_subteam.p_subteam_id"))
-    s_subteam_id = db.Column(db.Integer, db.ForeignKey("s_subteam.s_subteam_id"))
-    member_id = db.Column(db.Integer, db.ForeignKey("member.member_id"))
+#     uuid = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
+#     p_subteam_id = db.Column(db.Integer, db.ForeignKey("p_subteam.p_subteam_id"))
+#     s_subteam_id = db.Column(db.Integer, db.ForeignKey("s_subteam.s_subteam_id"))
+#     member_id = db.Column(db.Integer, db.ForeignKey("member.member_id"))
 
 
 
@@ -100,7 +109,8 @@ class Veteran(db.Model):
     # creating the columns, with datatypes and constraints
     __tablename__ = "veteran"
 
-    uuid = db.Column(db.Integer, db.ForeignKey("team_member.uuid"), primary_key = True)
+    uuid = db.Column(db.Integer, unique = True, primary_key=True, nullable=False)
+    p_subteam_id = db.Column(db.Integer, db.ForeignKey("member.p_subteam_id"))
 
 
     
@@ -108,7 +118,8 @@ class Rookie(db.Model):
     # creating the columns, with datatypes and constraints
     __tablename__ = "rookie"
 
-    uuid = db.Column(db.Integer, db.ForeignKey("team_member.uuid"), primary_key = True)
+    uuid = db.Column(db.Integer, unique = True, primary_key=True, nullable=False)
+    p_subteam_id = db.Column(db.Integer, db.ForeignKey("member.p_subteam_id"))
 
 
 
@@ -116,7 +127,8 @@ class InSeason(db.Model):
     # creating the columns, with datatypes and constraints
     __tablename__ = "fulltime"
 
-    uuid = db.Column(db.Integer, db.ForeignKey("team_member.uuid"), primary_key = True)
+    uuid = db.Column(db.Integer, unique = True, primary_key=True, nullable=False)
+    p_subteam_id = db.Column(db.Integer, db.ForeignKey("member.p_subteam_id"))
 
 
     
@@ -124,7 +136,8 @@ class OffSeason(db.Model):
     # creating the columns, with datatypes and constraints
     __tablename__ = "parttime"
 
-    uuid = db.Column(db.Integer, db.ForeignKey("team_member.uuid"), primary_key = True)
+    uuid = db.Column(db.Integer, unique = True, primary_key=True, nullable=False)
+    p_subteam_id = db.Column(db.Integer, db.ForeignKey("member.p_subteam_id"))
 
 
 
@@ -132,7 +145,8 @@ class Log(db.Model):
     # creating the columns, with datatypes and constraints
     __tablename__ = "scanning_log"
 
-    uuid = db.Column(db.Integer, db.ForeignKey("team_member.uuid"), primary_key = True)
+    uuid = db.Column(db.Integer, unique = True, primary_key=True, nullable=False)
+    p_subteam_id = db.Column(db.Integer, db.ForeignKey("member.p_subteam_id"))
     created_at = db.Column(db.DateTime(timezone = True), server_default = func.now())
 
 
@@ -171,11 +185,79 @@ class Log(db.Model):
 # db.session.commit()
 
 
+# creating the tables
+def create_tables():
+    with app.app_context():
+        db.create_all()
+
+
+# drops all tables and related data. ONLY USE FOR TESTING PURPOSES.
+def drop_tables():
+    """Drops all foreign key constraints before dropping all tables."""
+    with app.app_context():
+        con = db.engine.connect()
+        trans = con.begin()
+        inspector = Inspector.from_engine(db.engine)
+
+        meta = MetaData()
+        tables = []
+        all_fkeys = []
+
+        for table_name in inspector.get_table_names():
+            fkeys = []
+            for fkey in inspector.get_foreign_keys(table_name):
+                if not fkey["name"]:
+                    continue
+                fkeys.append(db.ForeignKeyConstraint((), (), name=fkey["name"]))
+            tables.append(Table(table_name, meta, *fkeys))
+            all_fkeys.extend(fkeys)
+
+        # Drop all foreign key constraints first
+        for fkey in all_fkeys:
+            con.execute(DropConstraint(fkey))
+
+        # Drop all tables next
+        for table in tables:
+            con.execute(DropTable(table))
+
+        trans.commit()
+        con.close()
+        print("All tables and constraints dropped (dependency error solved).")
+
+create_tables()
+
+
 
     
-# @app.route("/")
-# def hello():
-#      return "200/ok"
+@app.route("/")
+def index():
+     return render_template("flasktest-auth.html")
 
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0')
+@app.route("/submit", methods=["GET","POST"])
+def submit():
+    if request.method == "POST":
+        name = request.form["name"]
+        email = request.form["email"]
+        password = request.form["password"]
+        subteam = request.form["subteam"]
+        status = request.form["status"]
+
+        new_user = Member(name=name, email=email, password=password, status = status, )
+
+        db.session.add(new_user)
+        db.session.commit()
+    return render_template("members.html", members=Member.Subclasses())
+
+
+@app.route("/members", methods=["GET"])
+def display_users():
+    newmember = Member(name="wuyou", email="email@email.com", password="123", p_subteam_id="1", status="rookie")
+    db.session.add(newmember)
+    db.session.commit()
+    members = Member.query.all()
+    return render_template("members.html", members=members)
+
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
