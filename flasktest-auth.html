@@ -17,6 +17,10 @@
 
         <form id="form" class="form">
             <label>
+                Name
+                <input id="name" type="text" autocomplete="name" required/>
+            </label>
+            <label class="signup-only">
                  Email
                  <input id="email" type="email" autocomplete="email" required/>
              </label>
@@ -24,17 +28,59 @@
                 Password
                 <input id="password" type="password" autocomplete="password" required/>
             </label>
-            <label>
-                Name
-                <input id="name" type="text" autocomplete="name" required/>
-            </label>
-            <label>
-                Subteam
-                <input id="subteam" type="text" autocomplete="subteam" required/>
-            </label>
-            <label>
+            <div class="checkbox-group signup-only">
+                <label>Subteam</label>
+                
+                <label class="checkbox-item">
+                    <input type="checkbox" name="subteam" value="build">
+                    Build 
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="subteam" value="programming">
+                    Programming 
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="subteam" value="cad">
+                    CAD
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="subteam" value="fabrication">
+                    Fabrication
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="subteam" value="impact">
+                    Impact 
+                </label>
+                
+                <label class="checkbox-item">
+                    <input type="checkbox" name="subteam" value="advocacy">
+                    Advocacy 
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="subteam" value="outreach">
+                    Outreach 
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="subteam" value="media">
+                    Media 
+                </label>
+
+                </label>
+                
+            </div>
+            <label class="signup-only">
                 Veteran or Rookie
-                <input id="member-type" type="text" autocomplete="member-type" required/>
+                <select id="member-type">
+                    <option value="">Select one</option>
+                    <option value="veteran">Veteran</option>
+                    <option value="rookie">Rookie</option>
+                </select>
             </label>
 
             <button id="submitBtn" class="primary" type="submit">Login</button>

@@ -2,12 +2,25 @@
 <html> 
 <head> 
     <title>Test</title> 
-    <link rel="stylesheet" href="test.css"> 
+    <link rel="stylesheet" href="flasktest-camStyle.css"> 
     <!--Credit:https://www.npmjs.com/package/html5-qrcode/v/2.3.8?activeTab=code (figure out how to properly credit)-->
     <!--Credit: https://www.youtube.com/watch?v=19eo39lqpLM-->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 </head> 
 <body> 
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">Blue Cheese Robotics</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="flasktest-information.html" class="nav-link">Information</a></li>
+                <li><a href="camera/flasktest-camera.html" class="nav-link active">Camera</a></li>
+                <li><a href="flasktest-auth.html" class="nav-link">Login/Signup</a></li>
+                <!--<li><a href="flasktest-account.html" class="nav-link">Account</a></li>-->
+                <li><a href="admin/flasktest-admin.html" class="nav-link">Admin Panel</a></li>
+            </ul>
+        </div>
+    </nav>
     <video id="cameraFeed" autoplay></video> 
     <div id="reader"></div>
     <div id="result"></div>
