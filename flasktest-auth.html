@@ -15,20 +15,20 @@
             <button id="tabSignup" class="tab" type="button">Sign Up</button> 
         </div>
 
-        <form id="form" class="form">
+        <form id="form" class="form" method="POST" action="/submit">
             <label>
                 Name
-                <input id="name" type="text" autocomplete="name" required/>
+                <input id="name" type="text" autocomplete="name" name="name" required/>
             </label>
             <label class="signup-only">
                  Email
-                 <input id="email" type="email" autocomplete="email" required/>
+                 <input id="email" type="email" autocomplete="email" name="email" required/>
              </label>
              <label>
                 Password
-                <input id="password" type="password" autocomplete="password" required/>
+                <input id="password" type="password" autocomplete="password" name="password" required/>
             </label>
-            <div class="checkbox-group signup-only">
+            <div class="checkbox-group signup-only" name="subteam">
                 <label>Subteam</label>
                 
                 <label class="checkbox-item">
@@ -74,7 +74,7 @@
                 </label>
                 
             </div>
-            <label class="signup-only">
+            <label class="signup-only" name="status">
                 Veteran or Rookie
                 <select id="member-type">
                     <option value="">Select one</option>
