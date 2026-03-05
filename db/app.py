@@ -9,6 +9,9 @@ from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
+# importing Flask-Migrate
+from flask_migrate import Migrate
+
 # importing dotenv
 from dotenv import load_dotenv
 
@@ -31,6 +34,9 @@ app.config['SQLALCHEMY_TRACK_NOTIFICATIONS'] = False
 
 # storing database object
 db = SQLAlchemy(app)
+
+# creating migrate variable
+migrate = Migrate(app,db)
 
 # outdated template
 # class Test(db.Model):
@@ -71,10 +77,11 @@ class Member(db.Model):
     __tablename__ = "member"
 
     member_id = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
-    firstname = db.Column(db.String(50), nullable = False)
-    lastname = db.Column(db.String(50), nullable = False)
-    status = db.Column(db.String(50), nullable = False,)
-    type = db.Column(db.String(50), nullable = False,)
+    name = db.Column(db.String(50), nullable = False)
+    email = db.Column(db.String(100), nullable = False)
+    password = db.Column(db.String(100), nullable = False)
+    status = db.Column(db.String(50), nullable = False)
+    type = db.Column(db.String(50))
 
 
 
