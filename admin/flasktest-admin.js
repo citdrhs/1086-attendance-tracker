@@ -1,5 +1,7 @@
 const PWD   = 'bluecheese123';
-const TOTAL = 10, MIN = 7;
+const TOTAL = 10;
+const VET_MIN = 7;
+const ROO_MIN = 5;
 
 let all = [], shown = [];
 
@@ -30,9 +32,11 @@ document.addEventListener('DOMContentLoaded', () =>
 // data
 
 async function loadMembers() {
+  // connect to flask here to get real data instead of mock data
   all = getMockData();
   shown = [...all];
   render();
+  renderReport();
 }
 
 // tabs and filters
@@ -93,17 +97,65 @@ function render() {
     : `<tr><td colspan="5" class="empty">No at-risk members — great work.</td></tr>`;
 }
 
+
+
+
+function getStatus(m) {
+  const min = m.type === 'Veteran' ? VET_MIN : ROO_MIN;
+  if (m.actual_n > min)   return 'Passing';
+  if (m.actual_n === min) return 'At-Risk';
+  return 'Failing';
+}
+
+function renderReport() {
+  const sorted = [...all].sort((a, b) => {
+    const order = { 'Failing': 0, 'At-Risk': 1, 'Passing': 2 };
+    return order[getStatus(a)] - order[getStatus(b)];
+  });
+
+  document.getElementById('tReport').innerHTML = sorted.map(m => {
+    const status = getStatus(m);
+    const min = m.type === 'Veteran' ? VET_MIN : ROO_MIN;
+    const statusBadge =
+      status === 'Passing'  ? '<span class="badge b-green">Passing</span>'  :
+      status === 'At-Risk'  ? '<span class="badge b-yellow">At-Risk</span>' :
+                              '<span class="badge b-red">Failing</span>';
+    return `<tr>
+      <td><strong>${m.name}</strong></td>
+      <td>${m.subteam}</td>
+      <td>${typeBadge(m.type)}</td>
+      <td>${m.actual_n} / ${TOTAL}</td>
+      <td>${min} / ${TOTAL}</td>
+      <td>${statusBadge}</td>
+    </tr>`;
+  }).join('');
+
+  const passing = sorted.filter(m => getStatus(m) === 'Passing').length;
+  const atrisk  = sorted.filter(m => getStatus(m) === 'At-Risk').length;
+  const failing = sorted.filter(m => getStatus(m) === 'Failing').length;
+  document.getElementById('reportSummary').textContent =
+    `${passing} passing · ${atrisk} at-risk · ${failing} failing`;
+}
+
+//function downloadReport() {
+//  window.open('/api/report');
+//}
+
+function downloadReport() {
+  window.print();
+}
+
 // mock data ( TO BE REMOVED WHEN CONNECTED TO BACKEND FLASK)
 
 function getMockData() {
   return [
-    { name: 'Aatish Iyer',           grade: 10, subteam: 'Fabrication', type: 'Rookie',  actual_n: 5,  risk: true  },
-    { name: 'Aditi Inamdar',         grade: 10, subteam: 'Business',    type: 'Rookie',  actual_n: 8,  risk: false },
+    { name: 'Aatish Iyer',           grade: 10, subteam: 'Programming', type: 'Rookie',  actual_n: 5,  risk: true  },
+    { name: 'Aditi Inamdar',         grade: 10, subteam: 'Build',    type: 'Rookie',  actual_n: 8,  risk: false },
     { name: 'Ibrahim Alnaqshabandi', grade: 11, subteam: 'Impact',  type: 'Veteran', actual_n: 9,  risk: false },
-    { name: 'Nidhira Palakolanu',    grade: 11, subteam: 'CAD',         type: 'Veteran', actual_n: 7,  risk: false },
+    { name: 'Nidhira Palakolanu',    grade: 11, subteam: 'Outreach',         type: 'Veteran', actual_n: 7,  risk: false },
     { name: 'Ishant Mekala',          grade: 11, subteam: 'Media',  type: 'Veteran', actual_n: 10, risk: false },
-    { name: 'Wuyou Zhan',            grade: 10, subteam: 'Fabrication', type: 'Rookie',  actual_n: 4,  risk: true  },
+    { name: 'Wuyou Zhan',            grade: 10, subteam: 'Design', type: 'Rookie',  actual_n: 4,  risk: true  },
     { name: 'Yagna Patel',           grade: 11, subteam: 'Media',       type: 'Veteran', actual_n: 8,  risk: false },
-    { name: 'Yathu Suryavanshi',     grade: 10,  subteam: 'Strategy',    type: 'Rookie',  actual_n: 6,  risk: true  },
+    { name: 'Yathu Suryavanshi',     grade: 10,  subteam: 'Build',    type: 'Rookie',  actual_n: 6,  risk: true  },
   ];
 }

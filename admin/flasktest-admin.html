@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="flasktest-admin.css">
 </head>
 <body>
-    <script src="flasktest-admin.js"></script>
+<script src="flasktest-admin.js"></script>
 
 <!-- LOGIN -->
 <div id="login">
@@ -17,6 +17,10 @@
     <label class="field-label">Password</label>
     <input type="password" id="pw" placeholder="Enter password" />
     <button onclick="login()">Enter →</button>
+
+    <p id="backBtn" class="small">
+      <a href="/index.html">Back to home</a>
+  </p>
   </div>
 </div>
 
@@ -29,6 +33,7 @@
     <div class="tabs">
       <button class="tab active" onclick="tab('members',this)">Members</button>
       <button class="tab" onclick="tab('atrisk',this)">At-Risk</button>
+      <button class="tab" onclick="tab('report',this)">2-Week Report</button>
     </div>
     <div class="header-right">
       <button class="logout" onclick="logout()">Logout</button>
@@ -39,9 +44,8 @@
     <select id="fSub" onchange="filter()">
       <option value="">All Subteams</option>
       <option>Build</option>
-      <option>Fabrication</option>
+      <option>Design</option>
       <option>Programming</option>
-      <option>CAD</option>
       <option>Advocacy</option>
       <option>Media</option>
       <option>Impact</option>
@@ -97,6 +101,34 @@
               </tr>
             </thead>
             <tbody id="tRisk"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2-WEEK REPORT -->
+    <div id="sec-report" class="section">
+      <div class="card">
+        <div class="card-head">
+          <h2>2-Week Report</h2>
+          <span id="reportSummary"></span>
+        </div>
+        <div style="padding:0.75rem 1.25rem;background:#e8edf7;border-bottom:1px solid #d1d9ef;display:flex;justify-content:flex-end">
+          <button onclick="downloadReport()" style="background:#1e3a8a;color:#fbbf24;border:none;border-radius:5px;padding:0.4rem 1rem;font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer">↓ Download One-Pager</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Subteam</th>
+                <th>Type</th>
+                <th>Attended</th>
+                <th>Required</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="tReport"></tbody>
           </table>
         </div>
       </div>

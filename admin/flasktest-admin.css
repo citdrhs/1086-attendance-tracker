@@ -341,3 +341,8 @@ tbody td {
     color: #64748b;
     font-size: 0.875rem;
 }
+
+.b-green {
+    background: #dcfce7;
+    color: #14532d;
+}
