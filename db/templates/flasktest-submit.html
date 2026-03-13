@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check In</title>
+    <link rel="stylesheet" href="/static/flasktest-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">Blue Cheese Robotics</div>
+            <ul class="nav-menu">
+                <li><a href="/home" class="nav-link">Home</a></li>
+                <li><a href="/information" class="nav-link">Information</a></li>
+                <li><a href="/camera" class="nav-link">Camera</a></li>
+                <li><a href="/admin" class="nav-link">Admin Panel</a></li>
+            </ul>
+            <a href="/profile" id="nav-profile" class="nav-link nav-logout">Profile</a>
+            <a href="/" id="nav-signin" class="nav-link nav-logout">Sign In</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="hero-section">
+            <img src="/static/logo.png" alt="Blue Cheese Robotics Logo" class="logo">
+            <h1 class="title">Check In</h1>
+            <p class="subtitle" id="member-name">Confirming attendance...</p>
+            <div class="button-container">
+                <button class="btn btn-primary" id="submit-btn" onclick="submitAttendance()">Submit Attendance</button>
+            </div>
+            <p id="msg"></p>
+        </div>
+    </main>
+
+    <script src="/static/flasktest-submit.js"></script>
+    <script src="/static/flasktest-nav.js"></script>
+</body>
+</html>

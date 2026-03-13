@@ -32,8 +32,8 @@ document.addEventListener('DOMContentLoaded', () =>
 // data
 
 async function loadMembers() {
-  // connect to flask here to get real data instead of mock data
-  all = getMockData();
+  const res = await fetch('/api/members');
+  all = await res.json();
   shown = [...all];
   render();
   renderReport();
@@ -79,7 +79,7 @@ function render() {
   document.getElementById('tMembers').innerHTML =
     shown.map(m => `<tr>
       <td><strong>${m.name}</strong></td>
-      <td>${m.grade}th</td>
+      <td>${m.grade ? m.grade + 'th' : '—'}</td>
       <td>${m.subteam}</td>
       <td>${typeBadge(m.type)}</td>
       <td>${m.actual_n} / ${TOTAL}</td>
