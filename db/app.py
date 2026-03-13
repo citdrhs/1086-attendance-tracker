@@ -86,11 +86,13 @@ class Member(db.Model):
     __tablename__ = "member"
 
     member_id = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
+    username = db.Column(db.String(50), unique = True, nullable = False)
     name = db.Column(db.String(50), nullable = False)
     email = db.Column(db.String(100), nullable = False)
     password = db.Column(db.String(100), nullable = False)
     p_subteam_id = db.Column(db.Integer, db.ForeignKey("p_subteam.p_subteam_id"), unique = True)
     status = db.Column(db.String(50), nullable = False)
+    grade = db.Column(db.Integer, nullable = False)
 
 
 
