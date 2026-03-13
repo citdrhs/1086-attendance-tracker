@@ -107,3 +107,4 @@ function getMockData() {
     { name: 'Yathu Suryavanshi',     grade: 10,  subteam: 'Strategy',    type: 'Rookie',  actual_n: 6,  risk: true  },
   ];
 }
+
