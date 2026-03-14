@@ -3,6 +3,9 @@ const TOTAL = 10;
 const VET_MIN = 7;
 const ROO_MIN = 5;
 
+const modal = document.getElementById("profileModal");
+
+
 let all = [], shown = [];
 
 // login for admin
@@ -158,4 +161,34 @@ function getMockData() {
     { name: 'Yagna Patel',           grade: 11, subteam: 'Media',       type: 'Veteran', actual_n: 8,  risk: false },
     { name: 'Yathu Suryavanshi',     grade: 10,  subteam: 'Build',    type: 'Rookie',  actual_n: 6,  risk: true  },
   ];
+  
+
 }
+
+// profile card 
+document.getElementById("tMembers").addEventListener("click", function(e) {
+
+  const row = e.target.closest("tr");
+  if (!row) return;
+
+  const cells = row.querySelectorAll("td");
+
+  document.getElementById("profileName").textContent = cells[0].innerText;
+  document.getElementById("profileGrade").textContent = cells[1].innerText;
+  document.getElementById("profileSubteam").textContent = cells[2].innerText;
+  document.getElementById("profileType").textContent = cells[3].innerText;
+  document.getElementById("profileMeetings").textContent = cells[4].innerText;
+
+  modal.style.display = "block";
+});
+
+document.querySelector(".close-btn").onclick = () => {
+  modal.style.display = "none";
+};
+
+window.onclick = (e) => {
+  if (e.target == modal) {
+      modal.style.display = "none";
+  }
+};
+
