@@ -192,3 +192,26 @@ window.onclick = (e) => {
   }
 };
 
+function editField(id) {
+
+  const span = document.getElementById(id);
+  const currentValue = span.textContent;
+
+  const input = document.createElement("input");
+  input.value = currentValue;
+
+  const saveBtn = document.createElement("button");
+  saveBtn.textContent = "Save";
+
+  saveBtn.onclick = () => {
+    span.textContent = input.value;
+    input.remove();
+    saveBtn.remove();
+  };
+
+  span.textContent = "";
+  span.appendChild(input);
+  span.appendChild(saveBtn);
+}
+
+
