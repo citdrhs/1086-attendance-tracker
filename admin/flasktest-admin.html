@@ -94,10 +94,30 @@
       </div>
 
       <div class="profile-body">
-        <strong>Username:</strong> teammember123</p>
-        <p><strong>Email:</strong> email123</p>
-        <p><strong>Password:</strong> password123</p>
-        <p><strong>Status:</strong> rookieorvet123</p>
+        <p>
+          <strong>Username:</strong>
+          <span id="profileUsername">teammember123</span>
+          <button onclick="editField('profileUsername')">Edit</button>
+        </p>
+        
+        <p>
+          <strong>Email:</strong>
+          <span id="profileEmail">email123</span>
+          <button onclick="editField('profileEmail')">Edit</button>
+        </p>
+        
+        <p>
+          <strong>Password:</strong>
+          <span id="profilePassword">password123</span>
+          <button onclick="editField('profilePassword')">Edit</button>
+        </p>
+        
+        <p>
+          <strong>Status:</strong>
+          <span id="profileStatus">rookieorvet123</span>
+          <button onclick="editField('profileStatus')">Edit</button>
+        </p>
+        
         <p>
           <strong>Grade:</strong> 
           <span id="profileGrade"></span>
