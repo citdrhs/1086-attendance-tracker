@@ -78,31 +78,6 @@ body{
     color:#333;
     }
     
-    /* EDIT BUTTON */
-    
-    .profile-field button{
-    background:#0b1f4d;
-    color:white;
-    border:none;
-    padding:5px 10px;
-    border-radius:4px;
-    cursor:pointer;
-    font-size:12px;
-    }
-    
-    .profile-field button:hover{
-    background:#071633;
-    }
-    
-    /* INPUTS WHEN EDITING */
-    
-    input, select{
-    flex:1;
-    padding:6px;
-    border-radius:4px;
-    border:1px solid #ccc;
-    }
-
     /* back button */
     .small {margin: 14px 0 0; font-size: 13px; opacity: .9; }
     

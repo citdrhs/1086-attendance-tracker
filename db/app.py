@@ -13,8 +13,6 @@ from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
-# importing Flask-Migrate
-from flask_migrate import Migrate
 
 # importing some stuff for dropping tables (testing)
 from sqlalchemy.engine.reflection import Inspector
@@ -44,7 +42,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # creating migrate variable
-migrate = Migrate(app,db)
+
 
 # outdated template
 # class Test(db.Model):
