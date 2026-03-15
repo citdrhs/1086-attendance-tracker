@@ -13,13 +13,10 @@ from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
-# importing Flask-Migrate
-from flask_migrate import Migrate
 
 # importing some stuff for dropping tables (testing)
 from sqlalchemy.engine.reflection import Inspector
 from sqlalchemy.schema import DropConstraint, DropTable, MetaData, Table, ForeignKeyConstraint
-from flask_sqlalchemy import SQLAlchemy
 
 # importing dotenv
 from dotenv import load_dotenv
@@ -39,13 +36,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 # configuration keys for SQLAlchemy, the first is for specifying which database to connect to
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI")
-app.config['SQLALCHEMY_TRACK_NOTIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # storing database object
 db = SQLAlchemy(app)
 
 # creating migrate variable
-migrate = Migrate(app,db)
+
 
 # outdated template
 # class Test(db.Model):
@@ -90,9 +87,9 @@ class Member(db.Model):
     name = db.Column(db.String(50), nullable = False)
     email = db.Column(db.String(100), nullable = False)
     password = db.Column(db.String(100), nullable = False)
-    p_subteam_id = db.Column(db.Integer, db.ForeignKey("p_subteam.p_subteam_id"), unique = True)
+    p_subteam_id = db.Column(db.Integer, db.ForeignKey("p_subteam.p_subteam_id"))
     status = db.Column(db.String(50), nullable = False)
-    grade = db.Column(db.Integer, nullable = False)
+    grade = db.Column(db.Integer, nullable = True)
 
 
 
@@ -112,7 +109,7 @@ class Veteran(db.Model):
     __tablename__ = "veteran"
 
     uuid = db.Column(db.Integer, unique = True, primary_key=True, nullable=False)
-    p_subteam_id = db.Column(db.Integer, db.ForeignKey("member.p_subteam_id"))
+    p_subteam_id = db.Column(db.Integer, db.ForeignKey("member.member_id"))
 
 
     
@@ -121,7 +118,7 @@ class Rookie(db.Model):
     __tablename__ = "rookie"
 
     uuid = db.Column(db.Integer, unique = True, primary_key=True, nullable=False)
-    p_subteam_id = db.Column(db.Integer, db.ForeignKey("member.p_subteam_id"))
+    p_subteam_id = db.Column(db.Integer, db.ForeignKey("member.member_id"))
 
 
 
@@ -130,7 +127,7 @@ class InSeason(db.Model):
     __tablename__ = "fulltime"
 
     uuid = db.Column(db.Integer, unique = True, primary_key=True, nullable=False)
-    p_subteam_id = db.Column(db.Integer, db.ForeignKey("member.p_subteam_id"))
+    p_subteam_id = db.Column(db.Integer, db.ForeignKey("member.member_id"))
 
 
     
@@ -139,18 +136,16 @@ class OffSeason(db.Model):
     __tablename__ = "parttime"
 
     uuid = db.Column(db.Integer, unique = True, primary_key=True, nullable=False)
-    p_subteam_id = db.Column(db.Integer, db.ForeignKey("member.p_subteam_id"))
+    p_subteam_id = db.Column(db.Integer, db.ForeignKey("member.member_id"))
 
 
 
 class Log(db.Model):
-    # creating the columns, with datatypes and constraints
     __tablename__ = "scanning_log"
 
-    uuid = db.Column(db.Integer, unique = True, primary_key=True, nullable=False)
-    p_subteam_id = db.Column(db.Integer, db.ForeignKey("member.p_subteam_id"))
-    created_at = db.Column(db.DateTime(timezone = True), server_default = func.now())
-
+    uuid = db.Column(db.Integer, unique=True, primary_key=True, nullable=False)
+    member_id = db.Column(db.Integer, db.ForeignKey("member.member_id"))
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
 
 # Just in case:
     # firstname = db.Column(db.String(50), db.ForeignKey("member.firstname"))
@@ -233,29 +228,176 @@ create_tables()
     
 @app.route("/")
 def index():
-     return render_template("flasktest-auth.html")
+    return render_template("flasktest-auth.html")
 
-@app.route("/submit", methods=["GET","POST"])
-def submit():
-    if request.method == "POST":
-        name = request.form["name"]
-        email = request.form["email"]
-        password = request.form["password"]
-        subteam = request.form["subteam"]
-        status = request.form["status"]
+@app.route("/home")
+def home():
+    return render_template("index.html")
 
-        new_user = Member(name=name, email=email, password=password, status = status, )
+@app.route("/auth")
+def auth():
+    return render_template("flasktest-auth.html")
 
-        db.session.add(new_user)
-        db.session.commit()
-    return render_template("members.html", members=Member.Subclasses())
+@app.route("/information")
+def information():
+    return render_template("flasktest-information.html")
+
+@app.route("/camera")
+def camera():
+    return render_template("flasktest-camera.html")
+
+@app.route("/admin")
+def admin():
+    return render_template("flasktest-admin.html")
+
+@app.route("/checkin")
+def checkin():
+    return render_template("flasktest-submit.html")
+
+@app.route("/profile")
+def profile():
+    return render_template("flasktest-profile.html")
+
+@app.route("/api/profile", methods=["GET"])
+def api_profile_get():
+    member_id = request.args.get("member_id")
+    if not member_id:
+        return {"error": "member_id is required."}, 400
+
+    member = Member.query.get(member_id)
+    if not member:
+        return {"error": "Member not found."}, 404
+
+    subteam_name = ""
+    if member.p_subteam_id:
+        subteam = PrimarySubteam.query.get(member.p_subteam_id)
+        if subteam:
+            subteam_name = subteam.p_subteam_name.capitalize()
+
+    return {
+        "username": member.username,
+        "name": member.name,
+        "email": member.email,
+        "status": member.status,
+        "subteam": subteam_name,
+        "grade": member.grade
+    }, 200
+
+
+@app.route("/api/profile", methods=["PUT"])
+def api_profile_put():
+    data = request.get_json()
+    member_id = data.get("member_id")
+    if not member_id:
+        return {"error": "member_id is required."}, 400
+
+    member = Member.query.get(member_id)
+    if not member:
+        return {"error": "Member not found."}, 404
+
+    new_username = data.get("username")
+    new_password = data.get("password")
+
+    if new_username:
+        existing = Member.query.filter_by(username=new_username).first()
+        if existing and existing.member_id != member.member_id:
+            return {"error": "Username already taken."}, 400
+        member.username = new_username
+
+    if new_password:
+        member.password = new_password
+
+    db.session.commit()
+    return {"message": "Profile updated."}, 200
+
+
+@app.route("/api/checkin", methods=["POST"])
+def api_checkin():
+    data = request.get_json()
+    member_id = data.get("member_id")
+
+    if not member_id:
+        return {"error": "member_id is required."}, 400
+
+    member = Member.query.get(member_id)
+    if not member:
+        return {"error": "Member not found."}, 404
+
+    log = Log(member_id=member_id)
+    db.session.add(log)
+    db.session.commit()
+    return {"message": "Attendance recorded."}, 201
+
+@app.route("/api/members", methods=["GET"])
+def api_members():
+    members = Member.query.all()
+    result = []
+    for m in members:
+        subteam_name = ""
+        if m.p_subteam_id:
+            subteam = PrimarySubteam.query.get(m.p_subteam_id)
+            if subteam:
+                subteam_name = subteam.p_subteam_name.capitalize()
+        type_label = m.status.capitalize() if m.status else ""
+        actual_n = Log.query.filter_by(member_id=m.member_id).count()
+        min_n = 7 if type_label == "Veteran" else 5
+        result.append({
+            "name": m.name,
+            "grade": m.grade or "",
+            "subteam": subteam_name,
+            "type": type_label,
+            "actual_n": actual_n,
+            "risk": actual_n < min_n
+        })
+    return result
+
+@app.route("/api/signup", methods=["POST"])
+def api_signup():
+    data = request.get_json()
+    username = data.get("username")
+    name = data.get("name")
+    email = data.get("email")
+    password = data.get("password")
+    subteams = data.get("subteams", [])
+    member_type = data.get("memberType")
+    grade = data.get("grade")
+
+    if not username or not name or not email or not password or not member_type:
+        return {"error": "All fields are required."}, 400
+
+    if Member.query.filter_by(username=username).first():
+        return {"error": "Username already taken."}, 400
+
+    if Member.query.filter_by(email=email).first():
+        return {"error": "Email already registered."}, 400
+
+    p_subteam_id = None
+    if subteams:
+        subteam = PrimarySubteam.query.filter_by(p_subteam_name=subteams[0]).first()
+        if subteam:
+            p_subteam_id = subteam.p_subteam_id
+
+    new_member = Member(username=username, name=name, email=email, password=password, p_subteam_id=p_subteam_id, status=member_type, grade=grade)
+    db.session.add(new_member)
+    db.session.commit()
+    return {"message": "Account created."}, 201
+
+
+@app.route("/api/login", methods=["POST"])
+def api_login():
+    data = request.get_json()
+    username = data.get("username")
+    password = data.get("password")
+
+    member = Member.query.filter_by(username=username, password=password).first()
+    if not member:
+        return {"error": "Invalid username or password."}, 401
+
+    return {"message": "Login successful.", "member_id": member.member_id}, 200
 
 
 @app.route("/members", methods=["GET"])
 def display_users():
-    newmember = Member(name="wuyou", email="email@email.com", password="123", p_subteam_id="1", status="rookie")
-    db.session.add(newmember)
-    db.session.commit()
     members = Member.query.all()
     return render_template("members.html", members=members)
 

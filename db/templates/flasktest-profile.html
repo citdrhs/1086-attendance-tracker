@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Blue Cheese Robotics</title>
+    <link rel="stylesheet" href="/static/flasktest-profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">Blue Cheese Robotics</div>
+            <ul class="nav-menu">
+                <li><a href="/home" class="nav-link">Home</a></li>
+                <li><a href="/information" class="nav-link">Information</a></li>
+                <li><a href="/camera" class="nav-link">Camera</a></li>
+                <li><a href="/admin" class="nav-link">Admin Panel</a></li>
+            </ul>
+            <a href="/profile" id="nav-profile" class="nav-link nav-logout active">Profile</a>
+            <a href="/" id="nav-signin" class="nav-link nav-logout">Sign In</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="profile-card">
+            <h2>Account Profile</h2>
+
+            <div class="profile-field">
+                <label>Username</label>
+                <span id="usernameText"></span>
+                <input id="usernameInput" type="text">
+                <button class="edit-btn" onclick="editField('username')">Edit</button>
+            </div>
+
+            <div class="profile-field">
+                <label>Password</label>
+                <span id="passwordText">••••••••</span>
+                <input id="passwordInput" type="password" placeholder="New password">
+                <button class="edit-btn" onclick="editField('password')">Edit</button>
+            </div>
+
+            <div class="profile-field">
+                <label>Full Name</label>
+                <span id="nameText"></span>
+            </div>
+
+            <div class="profile-field">
+                <label>Email</label>
+                <span id="emailText"></span>
+            </div>
+
+            <div class="profile-field">
+                <label>Status</label>
+                <span id="statusText"></span>
+            </div>
+
+            <div class="profile-field">
+                <label>Subteam</label>
+                <span id="subteamText"></span>
+            </div>
+
+            <div class="profile-field">
+                <label>Grade</label>
+                <span id="gradeText"></span>
+            </div>
+
+            <p id="profile-msg"></p>
+            <button id="save-btn" class="save-btn">Save Changes</button>
+            <button id="signout-btn" class="signout-btn">Sign Out</button>
+        </div>
+    </main>
+
+    <script src="/static/flasktest-nav.js"></script>
+    <script src="/static/flasktest-profile.js"></script>
+</body>
+</html>

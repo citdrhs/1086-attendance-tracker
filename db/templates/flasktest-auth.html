@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Login / Sign Up</title>
+        <link rel="stylesheet" href="/static/flasktest-auth.css" />
+    </head>
+<body>
+    <main class="card">
+        <h1 id="title">Welcome</h1>
+
+        <div class="tabs">
+            <button id="tabLogin" class="tab active" type="button">Login</button> 
+            <button id="tabSignup" class="tab" type="button">Sign Up</button> 
+        </div>
+
+        <form id="form" class="form">
+            <label>
+                Username
+                <input id="username" type="text" autocomplete="username" name="username" required/>
+            </label>
+            <label class="signup-only">
+                Full Name
+                <input id="name" type="text" autocomplete="name" name="name"/>
+            </label>
+            <label class="signup-only">
+                 Email
+                 <input id="email" type="email" autocomplete="email" name="email"/>
+             </label>
+             <label>
+                Password
+                <input id="password" type="password" autocomplete="password" name="password" required/>
+            </label>
+            <div class="checkbox-group signup-only" name="subteam">
+                <label>Subteam</label>
+                
+                <label class="checkbox-item">
+                    <input type="checkbox" name="subteam" value="build">
+                    Build 
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="subteam" value="programming">
+                    Programming 
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="subteam" value="design">
+                    Design
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="subteam" value="impact">
+                    Impact 
+                </label>
+                
+                <label class="checkbox-item">
+                    <input type="checkbox" name="subteam" value="advocacy">
+                    Advocacy 
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="subteam" value="outreach">
+                    Outreach 
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="subteam" value="media">
+                    Media 
+                </label>
+
+            </div>
+            <label class="signup-only">
+                Grade
+                <select id="grade" name="grade">
+                    <option value="">Select grade</option>
+                    <option value="9">9th</option>
+                    <option value="10">10th</option>
+                    <option value="11">11th</option>
+                    <option value="12">12th</option>
+                </select>
+            </label>
+            <label class="signup-only">
+                Veteran or Rookie
+                <select id="member-type" name="status">
+                    <option value="">Select one</option>
+                    <option value="veteran">Veteran</option>
+                    <option value="rookie">Rookie</option>
+                </select>
+            </label>
+
+            <button id="submitBtn" class="primary login-only" type="submit">Login</button>
+            <button id="signupBtn" class="primary signup-only" type="submit">Sign Up</button>
+            <p id="msg" class="msg" aria-live="polite"></p>
+
+        
+        </form>
+
+        <p id="backBtn" class="small">
+            <a href="/home">Back to home</a>
+        </p>
+    </main>
+    <script src="/static/flasktest-auth.js"></script>
+</body>
+</html>
