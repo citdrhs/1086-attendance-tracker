@@ -399,7 +399,7 @@ def api_login():
 @app.route("/members", methods=["GET"])
 def display_users():
     members = Member.query.all()
-    return render_template("members.html", members=members)
+    return render_template("flasktest-members.html", members=members)
 
 
 
