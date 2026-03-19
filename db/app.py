@@ -313,8 +313,8 @@ def api_profile_put():
 
 @app.route("/api/checkin", methods=["POST"])
 def api_checkin():
-    data = request.get_json()
-    member_id = data.get("member_id")
+    # data = request.get_json()
+    member_id = Member.query.get(member_id)
 
     if not member_id:
         return {"error": "member_id is required."}, 400

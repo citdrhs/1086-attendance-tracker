@@ -28,7 +28,9 @@
             <h1 class="title">Check In</h1>
             <p class="subtitle" id="member-name">Confirming attendance...</p>
             <div class="button-container">
-                <button class="btn btn-primary" id="submit-btn" onclick="submitAttendance()">Submit Attendance</button>
+                <form method="POST" action="/api/checkin">
+                    <button class="btn btn-primary" id="submit-btn" onclick="submitAttendance()">Submit Attendance</button>
+                </form>
             </div>
             <p id="msg"></p>
         </div>
