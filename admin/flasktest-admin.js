@@ -79,14 +79,31 @@ function riskBadge(n) {
 }
 
 function render() {
+  const search = document.getElementById('fSearch').value.toLowerCase();
+
   document.getElementById('tMembers').innerHTML =
-    shown.map(m => `<tr>
-      <td><strong>${m.name}</strong></td>
-      <td>${m.grade}th</td>
-      <td>${m.subteam}</td>
-      <td>${typeBadge(m.type)}</td>
-      <td>${m.actual_n} / ${TOTAL}</td>
-    </tr>`).join('') || `<tr><td colspan="5" class="empty">No results found.</td></tr>`;
+    shown.map(m => {
+
+      const status = getStatus(m);
+      const rowClass =
+        status === 'Failing' ? 'row-red' :
+        status === 'At-Risk' ? 'row-yellow' :
+        'row-green';
+
+      let name = m.name;
+      if (search) {
+        const regex = new RegExp(`(${search})`, "gi");
+        name = name.replace(regex, `<span class="highlight">$1</span>`);
+      }
+
+      return `<tr class="${rowClass}">
+        <td><strong>${name}</strong></td>
+        <td>${m.grade}th</td>
+        <td>${m.subteam}</td>
+        <td>${typeBadge(m.type)}</td>
+        <td>${m.actual_n} / ${TOTAL}</td>
+      </tr>`;
+    }).join('') || `<tr><td colspan="5" class="empty">No results found.</td></tr>`;
 
   const risks = [...shown.filter(m => m.risk)].sort((a, b) => a.actual_n - b.actual_n);
   document.getElementById('tRisk').innerHTML = risks.length
