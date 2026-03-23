@@ -184,9 +184,14 @@ function getMockData() {
 
 // profile card 
 document.getElementById("tMembers").addEventListener("click", function(e) {
-
   const row = e.target.closest("tr");
   if (!row) return;
+
+  // remove highlight from all rows
+  document.querySelectorAll("#tMembers tr").forEach(r => r.classList.remove("selected"));
+
+  // add highlight to clicked row
+  row.classList.add("selected");
 
   const cells = row.querySelectorAll("td");
 
