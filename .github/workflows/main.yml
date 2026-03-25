@@ -19,5 +19,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/att1086/www
-            git pull origin main
+            git pull origin MAIN
             sudo systemctl reload att1086
