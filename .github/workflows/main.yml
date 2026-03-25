@@ -16,7 +16,7 @@ jobs:
           host: drhscit.org
           port: 4243
           username: att1086
-          key: ${{ secrets.SSH_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/att1086/www
             git pull origin main
