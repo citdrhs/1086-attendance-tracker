@@ -38,3 +38,4 @@ jobs:
           script: |
             cd /home/grit/www
             git pull origin main
+Test push
