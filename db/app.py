@@ -313,8 +313,8 @@ def api_profile_put():
 
 @app.route("/api/checkin", methods=["POST"])
 def api_checkin():
-    data = request.get_json()
-    member_id = data.get("member_id")
+    # data = request.get_json()
+    member_id = Member.query.get(member_id)
 
     if not member_id:
         return {"error": "member_id is required."}, 400
@@ -399,7 +399,7 @@ def api_login():
 @app.route("/members", methods=["GET"])
 def display_users():
     members = Member.query.all()
-    return render_template("members.html", members=members)
+    return render_template("flasktest-members.html", members=members)
 
 
 

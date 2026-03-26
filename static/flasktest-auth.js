@@ -74,7 +74,7 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const res = await fetch(
-      mode === "login" ? "/api/login" : "/api/signup",
+mode === "login" ? "https://drhscit.org/att1086/api/login" : "https://drhscit.org/att1086/api/signup",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -425,4 +425,23 @@ tbody td {
   .profile-body button:hover {
     background: #152c66;
   }
-  
+  #tMembers tr.selected {
+  outline: 2px solid #3b82f6;
+}
+
+.row-red {
+  background-color: #fee2e2;
+}
+
+.row-yellow {
+  background-color: #fef9c3;
+}
+
+.row-green {
+  background-color: #dcfce7;
+}
+
+.highlight {
+  background-color: yellow;
+  font-weight: bold;
+}

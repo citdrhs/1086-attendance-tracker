@@ -3,6 +3,7 @@ Description=Gunicorn instance to serve 1086-attendance-tracker
 After=network.target
 
 [Service]
+ExecReload=/bin/kill -HUP $MAINPID
 User=dgmiller1
 Group=www-data
 WorkingDirectory=/var/www/html/1086-attendance-tracker
