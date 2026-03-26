@@ -69,12 +69,12 @@ class PrimarySubteam(db.Model):
 
 
 
-# class SecondarySubteam(db.Model):
-#     # creating the columns, with datatypes and constraints
-#     __tablename__ = "s_subteam"
+class SecondarySubteam(db.Model):
+    # creating the columns, with datatypes and constraints
+    __tablename__ = "s_subteam"
 
-#     s_subteam_id = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
-#     s_subteam_name = db.Column(db.String(50), nullable = False)
+    s_subteam_id = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
+    s_subteam_name = db.Column(db.String(50), nullable = False)
 
 
 
