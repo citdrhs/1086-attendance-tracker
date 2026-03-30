@@ -236,4 +236,93 @@ function editField(id) {
   span.appendChild(saveBtn);
 }
 
+// CALENDAR VIEW
+const events = {
+  3: {
+      title: "Programming Meeting",
+      attendees: ["Aatish Iyer", "Ishant Mekala", "Yathu Suryavanshi"] // placeholder data, will need to replace with database
+  },
+  8: {
+      title: "Media Meeting",
+      attendees: ["Yagna Patel", "Ishant Mekala"]
+  },
+  12: {
+      title: "Build Session",
+      attendees: ["Aditi Inamdar", "Yathu Suryavanshi"]
+  },
+  17: {
+      title: "Outreach Meeting",
+      attendees: ["Nidhira Palakolanu"]
+  }
+};
+
+const calendar = document.getElementById("simple-calendar");
+const calendarModal = document.getElementById("eventModal");
+const closeModal = document.getElementById("closeModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalDate = document.getElementById("modalDate");
+const attendeeList = document.getElementById("attendeeList");
+
+const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function renderCalendar() {
+  const year = 2026;
+  const month = 3; // April (0-based would be 3)
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  let html = '<div class="calendar-grid">';
+
+  for (let dayName of dayNames) {
+      html += `<div class="day-name">${dayName}</div>`;
+  }
+
+  for (let i = 0; i < firstDay; i++) {
+      html += `<div></div>`;
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+      const event = events[day];
+      html += `
+          <div class="calendar-day" onclick="openEvent(${day})">
+              <div class="day-number">${day}</div>
+              ${event ? `<div class="event-tag">${event.title}</div>` : ""}
+          </div>
+      `;
+  }
+
+  html += "</div>";
+  calendar.innerHTML = html;
+}
+
+function openEvent(day) {
+  const event = events[day];
+  if (!event) return;
+
+  calendarModalTitle.textContent = event.title;
+  calendarModalDate.textContent = `April ${day}, 2026`;
+  attendeeList.innerHTML = "";
+
+  event.attendees.forEach(name => {
+      const li = document.createElement("li");
+      li.textContent = name;
+      attendeeList.appendChild(li);
+  });
+
+  calendarModal.classList.remove("hidden");
+}
+
+closeModal.addEventListener("click", () => {
+  calendarModal.classList.add("hidden");
+});
+
+calendarModal.addEventListener("click", (e) => {
+  if (e.target === calendarModal) {
+    calendarModal.classList.add("hidden");
+  }
+});
+
+renderCalendar();
+
+
 
