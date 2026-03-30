@@ -1,6 +1,7 @@
 
 <html> 
 <head> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test</title> 
     <link rel="stylesheet" href="flasktest-camStyle.css"> 
     <!--Credit:https://www.npmjs.com/package/html5-qrcode/v/2.3.8?activeTab=code (figure out how to properly credit)-->
@@ -32,10 +33,14 @@
             navMenu.classList.toggle('open');
         }
 
+        // Responsive QR box size
+        const isMobile = window.innerWidth <= 768;
+        const qrBoxSize = isMobile ? 200 : 250;
+
         const scanner = new Html5QrcodeScanner('reader', {/*creating instance of the scanner*/
         qrbox: {/* how big the qr scanning feature should be*/
-            width: 250,
-            height: 250,
+            width: qrBoxSize,
+            height: qrBoxSize,
         },
         fps: 20, /*frames per second setting*/
     });
