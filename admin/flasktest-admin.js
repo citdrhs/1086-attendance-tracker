@@ -237,80 +237,64 @@ function editField(id) {
 }
 
 // CALENDAR VIEW
-const events = {
-  3: {
-      title: "Programming Meeting",
-      attendees: ["Aatish Iyer", "Ishant Mekala", "Yathu Suryavanshi"] // placeholder data, will need to replace with database
+const events = [
+  {
+    title: "Programming Meeting",
+    start: "2026-04-03",
+    extendedProps: {
+      attendees: ["Aatish Iyer", "Ishant Mekala", "Yathu Suryavanshi"]
+    }
   },
-  8: {
-      title: "Media Meeting",
+  {
+    title: "Media Meeting",
+    start: "2026-04-08",
+    extendedProps: {
       attendees: ["Yagna Patel", "Ishant Mekala"]
+    }
   },
-  12: {
-      title: "Build Session",
+  {
+    title: "Build Session",
+    start: "2026-04-12",
+    extendedProps: {
       attendees: ["Aditi Inamdar", "Yathu Suryavanshi"]
+    }
   },
-  17: {
-      title: "Outreach Meeting",
+  {
+    title: "Outreach Meeting",
+    start: "2026-04-17",
+    extendedProps: {
       attendees: ["Nidhira Palakolanu"]
+    }
   }
-};
+];
 
-const calendar = document.getElementById("simple-calendar");
 const calendarModal = document.getElementById("eventModal");
 const closeModal = document.getElementById("closeModal");
 const modalTitle = document.getElementById("modalTitle");
 const modalDate = document.getElementById("modalDate");
 const attendeeList = document.getElementById("attendeeList");
 
-const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-function renderCalendar() {
-  const year = 2026;
-  const month = 3; // April (0-based would be 3)
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-  let html = '<div class="calendar-grid">';
-
-  for (let dayName of dayNames) {
-      html += `<div class="day-name">${dayName}</div>`;
-  }
-
-  for (let i = 0; i < firstDay; i++) {
-      html += `<div></div>`;
-  }
-
-  for (let day = 1; day <= daysInMonth; day++) {
-      const event = events[day];
-      html += `
-          <div class="calendar-day" onclick="openEvent(${day})">
-              <div class="day-number">${day}</div>
-              ${event ? `<div class="event-tag">${event.title}</div>` : ""}
-          </div>
-      `;
-  }
-
-  html += "</div>";
-  calendar.innerHTML = html;
-}
-
-function openEvent(day) {
-  const event = events[day];
-  if (!event) return;
-
-  calendarModalTitle.textContent = event.title;
-  calendarModalDate.textContent = `April ${day}, 2026`;
-  attendeeList.innerHTML = "";
-
-  event.attendees.forEach(name => {
-      const li = document.createElement("li");
-      li.textContent = name;
-      attendeeList.appendChild(li);
+document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar');
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    initialDate: '2026-04-01',
+    events: events,
+    eventClick: function(info) {
+      modalTitle.textContent = info.event.title;
+      const date = new Date(info.event.start);
+      modalDate.textContent = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      attendeeList.innerHTML = "";
+      info.event.extendedProps.attendees.forEach(name => {
+        const li = document.createElement("li");
+        li.textContent = name;
+        attendeeList.appendChild(li);
+      });
+      calendarModal.classList.remove("hidden");
+    }
   });
-
-  calendarModal.classList.remove("hidden");
-}
+  calendar.render();
+});
 
 closeModal.addEventListener("click", () => {
   calendarModal.classList.add("hidden");
@@ -321,8 +305,6 @@ calendarModal.addEventListener("click", (e) => {
     calendarModal.classList.add("hidden");
   }
 });
-
-renderCalendar();
 
 
 

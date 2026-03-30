@@ -448,7 +448,7 @@ tbody td {
 
 /* Calendar View */
 .calendar-section {
-    width: 85%;
+    width: 100%;
     margin: 40px auto;
     background: white;
     border-radius: 12px;
@@ -464,53 +464,8 @@ tbody td {
     font-weight: bold;
 }
 
-#simple-calendar {
-    padding: 20px;
-}
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 12px;
-}
-
-.day-name, .calendar-day {
-    text-align: center;
-    padding: 12px;
-    border-radius: 10px;
-}
-
-.day-name {
-    font-weight: bold;
-    color: #1e2fa0;
-    background: #f3f4f8;
-}
-
-.calendar-day {
-    min-height: 90px;
-    background: #f9f9f9;
-    border: 1px solid #ddd;
-    cursor: pointer;
-    position: relative;
-}
-
-.calendar-day:hover {
-    background: #eef2ff;
-}
-
-.day-number {
-    font-weight: bold;
-    color: #1e2fa0;
-    margin-bottom: 8px;
-}
-
-.event-tag {
-    background: #1e2fa0;
-    color: #f4c542;
-    padding: 4px 6px;
-    border-radius: 6px;
-    font-size: 12px;
-    display: inline-block;
+#calendar {
+    padding: 30px;
 }
 
 .modal {
