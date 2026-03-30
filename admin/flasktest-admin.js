@@ -28,6 +28,11 @@ function logout() {
   document.getElementById('err').style.display = 'none';
 }
 
+function toggleMenu() {
+  const tabs = document.querySelector('.tabs');
+  tabs.classList.toggle('open');
+}
+
 document.addEventListener('DOMContentLoaded', () =>
   document.getElementById('pw').addEventListener('keydown', e => e.key === 'Enter' && login())
 );
@@ -235,5 +240,79 @@ function editField(id) {
   span.appendChild(input);
   span.appendChild(saveBtn);
 }
+
+// CALENDAR VIEW
+const events = [
+  {
+    title: "Programming Meeting",
+    start: "2026-04-03",
+    extendedProps: {
+      attendees: ["Aatish Iyer", "Ishant Mekala", "Yathu Suryavanshi"]
+    }
+  },
+  {
+    title: "Media Meeting",
+    start: "2026-04-08",
+    extendedProps: {
+      attendees: ["Yagna Patel", "Ishant Mekala"]
+    }
+  },
+  {
+    title: "Build Session",
+    start: "2026-04-12",
+    extendedProps: {
+      attendees: ["Aditi Inamdar", "Yathu Suryavanshi"]
+    }
+  },
+  {
+    title: "Outreach Meeting",
+    start: "2026-04-17",
+    extendedProps: {
+      attendees: ["Nidhira Palakolanu"]
+    }
+  }
+];
+
+const calendarModal = document.getElementById("eventModal");
+const closeModal = document.getElementById("closeModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalDate = document.getElementById("modalDate");
+const attendeeList = document.getElementById("attendeeList");
+
+document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar');
+  if (calendarEl) {
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      initialDate: '2026-04-01',
+      events: events,
+      eventClick: function(info) {
+        modalTitle.textContent = info.event.title;
+        const date = new Date(info.event.start);
+        modalDate.textContent = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        attendeeList.innerHTML = "";
+        if (info.event.extendedProps && info.event.extendedProps.attendees) {
+          info.event.extendedProps.attendees.forEach(name => {
+            const li = document.createElement("li");
+            li.textContent = name;
+            attendeeList.appendChild(li);
+          });
+        }
+        calendarModal.classList.remove("hidden");
+      }
+    });
+    calendar.render();
+  }
+});
+
+closeModal.addEventListener("click", () => {
+  calendarModal.classList.add("hidden");
+});
+
+calendarModal.addEventListener("click", (e) => {
+  if (e.target === calendarModal) {
+    calendarModal.classList.add("hidden");
+  }
+});
 
 

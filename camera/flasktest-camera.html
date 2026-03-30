@@ -11,6 +11,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">Blue Cheese Robotics</div>
+            <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="flasktest-information.html" class="nav-link">Information</a></li>
@@ -26,6 +27,11 @@
     <div id="result"></div>
      
     <script>
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            navMenu.classList.toggle('open');
+        }
+
         const scanner = new Html5QrcodeScanner('reader', {/*creating instance of the scanner*/
         qrbox: {/* how big the qr scanning feature should be*/
             width: 250,
