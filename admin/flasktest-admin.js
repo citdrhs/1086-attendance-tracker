@@ -268,37 +268,62 @@ const modalTitle = document.getElementById("modalTitle");
 const modalDate = document.getElementById("modalDate");
 const attendeeList = document.getElementById("attendeeList");
 
-document.addEventListener('DOMContentLoaded', function() {
-  var calendarEl = document.getElementById('calendar');
-  var calendar = new FullCalendar.Calendar(calendarEl, {
+let calendar;
+
+document.addEventListener('DOMContentLoaded', function () {
+  const calendarEl = document.getElementById('calendar');
+
+  calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     initialDate: '2026-04-01',
+    height: 'auto',
     events: events,
     eventClick: function(info) {
       modalTitle.textContent = info.event.title;
+
       const date = new Date(info.event.start);
-      modalDate.textContent = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      modalDate.textContent = date.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      });
+
       attendeeList.innerHTML = "";
       info.event.extendedProps.attendees.forEach(name => {
         const li = document.createElement("li");
         li.textContent = name;
         attendeeList.appendChild(li);
       });
+
       calendarModal.classList.remove("hidden");
     }
   });
+
   calendar.render();
 });
 
-closeModal.addEventListener("click", () => {
-  calendarModal.classList.add("hidden");
-});
+function tab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
 
-calendarModal.addEventListener("click", (e) => {
-  if (e.target === calendarModal) {
-    calendarModal.classList.add("hidden");
+  document.getElementById('sec-' + id).classList.add('active');
+  btn.classList.add('active');
+
+  if (window.innerWidth <= 768) {
+    document.querySelector('.tabs').classList.remove('open');
   }
-});
+
+  if (id === 'calendar' && calendar) {
+    setTimeout(() => {
+      calendar.updateSize();
+    }, 50);
+  }
+}
+
+function toggleMenu() {
+  const tabs = document.querySelector('.tabs');
+  tabs.classList.toggle('open');
+}
 
 function editField(id) {
   const span = document.getElementById(id);
@@ -323,22 +348,6 @@ function editField(id) {
   span.appendChild(saveBtn);
 }
 
-function toggleMenu() {
-  const tabs = document.querySelector('.tabs');
-  tabs.classList.toggle('open');
-}
-
-function tab(id, btn) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-
-  document.getElementById('sec-' + id).classList.add('active');
-  btn.classList.add('active');
-
-  if (window.innerWidth <= 768) {
-    document.querySelector('.tabs').classList.remove('open');
-  }
-}
 
 
 
