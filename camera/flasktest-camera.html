@@ -4,8 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test</title> 
     <link rel="stylesheet" href="flasktest-camStyle.css"> 
-    <!--Credit:https://www.npmjs.com/package/html5-qrcode/v/2.3.8?activeTab=code (figure out how to properly credit)-->
-    <!--Credit: https://www.youtube.com/watch?v=19eo39lqpLM-->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 </head> 
 <body> 
@@ -18,7 +16,6 @@
                 <li><a href="flasktest-information.html" class="nav-link">Information</a></li>
                 <li><a href="camera/flasktest-camera.html" class="nav-link active">Camera</a></li>
                 <li><a href="flasktest-auth.html" class="nav-link">Login/Signup</a></li>
-                <!--<li><a href="flasktest-account.html" class="nav-link">Account</a></li>-->
                 <li><a href="admin/flasktest-admin.html" class="nav-link">Admin Panel</a></li>
             </ul>
         </div>
@@ -33,22 +30,21 @@
             navMenu.classList.toggle('open');
         }
 
-        // Responsive QR box size
         const isMobile = window.innerWidth <= 768;
         const qrBoxSize = isMobile ? 200 : 250;
 
-        const scanner = new Html5QrcodeScanner('reader', {/*creating instance of the scanner*/
-        qrbox: {/* how big the qr scanning feature should be*/
+        const scanner = new Html5QrcodeScanner('reader', {
+        qrbox: {
             width: qrBoxSize,
             height: qrBoxSize,
         },
-        fps: 20, /*frames per second setting*/
+        fps: 20, 
     });
        
 
         scanner.render(success, error); 
 
-        function success(result) { /*function which lets the user see if the scanning worked*/
+        function success(result) { 
             
             document.getElementById('result').innerHTML = `
                 <h2>Success!</h2>
@@ -59,7 +55,7 @@
             document.getElementById('reader').remove();
         }
 
-        function error (err){ /*if the scanning did not work, it leads to the error in the log*/
+        function error (err){
             console.error(err)
         }
         </script>

@@ -28,11 +28,6 @@ function logout() {
   document.getElementById('err').style.display = 'none';
 }
 
-function toggleMenu() {
-  const tabs = document.querySelector('.tabs');
-  tabs.classList.toggle('open');
-}
-
 document.addEventListener('DOMContentLoaded', () =>
   document.getElementById('pw').addEventListener('keydown', e => e.key === 'Enter' && login())
 );
@@ -188,58 +183,40 @@ function getMockData() {
 }
 
 // profile card 
-document.getElementById("tMembers").addEventListener("click", function(e) {
-  const row = e.target.closest("tr");
-  if (!row) return;
+document.addEventListener("DOMContentLoaded", function () {
+  const profileModal = document.getElementById("profileModal");
+  const tMembers = document.getElementById("tMembers");
+  const profileCloseBtn = profileModal.querySelector(".close-btn");
 
-  // remove highlight from all rows
-  document.querySelectorAll("#tMembers tr").forEach(r => r.classList.remove("selected"));
+  tMembers.addEventListener("click", function (e) {
+    const row = e.target.closest("tr");
+    if (!row) return;
 
-  // add highlight to clicked row
-  row.classList.add("selected");
+    document.querySelectorAll("#tMembers tr").forEach(r => r.classList.remove("selected"));
+    row.classList.add("selected");
 
-  const cells = row.querySelectorAll("td");
+    const cells = row.querySelectorAll("td");
+    if (cells.length < 5) return;
 
-  document.getElementById("profileName").textContent = cells[0].innerText;
-  document.getElementById("profileGrade").textContent = cells[1].innerText;
-  document.getElementById("profileSubteam").textContent = cells[2].innerText;
-  document.getElementById("profileType").textContent = cells[3].innerText;
-  document.getElementById("profileMeetings").textContent = cells[4].innerText;
+    document.getElementById("profileName").textContent = cells[0].innerText;
+    document.getElementById("profileGrade").textContent = cells[1].innerText;
+    document.getElementById("profileSubteam").textContent = cells[2].innerText;
+    document.getElementById("profileType").textContent = cells[3].innerText;
+    document.getElementById("profileMeetings").textContent = cells[4].innerText;
 
-  modal.style.display = "block";
-});
+    profileModal.style.display = "block";
+  });
 
-document.querySelector(".close-btn").onclick = () => {
-  modal.style.display = "none";
-};
-
-window.onclick = (e) => {
-  if (e.target == modal) {
-      modal.style.display = "none";
-  }
-};
-
-function editField(id) {
-
-  const span = document.getElementById(id);
-  const currentValue = span.textContent;
-
-  const input = document.createElement("input");
-  input.value = currentValue;
-
-  const saveBtn = document.createElement("button");
-  saveBtn.textContent = "Save";
-
-  saveBtn.onclick = () => {
-    span.textContent = input.value;
-    input.remove();
-    saveBtn.remove();
+  profileCloseBtn.onclick = () => {
+    profileModal.style.display = "none";
   };
 
-  span.textContent = "";
-  span.appendChild(input);
-  span.appendChild(saveBtn);
-}
+  window.addEventListener("click", function (e) {
+    if (e.target === profileModal) {
+      profileModal.style.display = "none";
+    }
+  });
+});
 
 // CALENDAR VIEW
 const events = [
@@ -281,28 +258,24 @@ const attendeeList = document.getElementById("attendeeList");
 
 document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
-  if (calendarEl) {
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      initialDate: '2026-04-01',
-      events: events,
-      eventClick: function(info) {
-        modalTitle.textContent = info.event.title;
-        const date = new Date(info.event.start);
-        modalDate.textContent = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-        attendeeList.innerHTML = "";
-        if (info.event.extendedProps && info.event.extendedProps.attendees) {
-          info.event.extendedProps.attendees.forEach(name => {
-            const li = document.createElement("li");
-            li.textContent = name;
-            attendeeList.appendChild(li);
-          });
-        }
-        calendarModal.classList.remove("hidden");
-      }
-    });
-    calendar.render();
-  }
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    initialDate: '2026-04-01',
+    events: events,
+    eventClick: function(info) {
+      modalTitle.textContent = info.event.title;
+      const date = new Date(info.event.start);
+      modalDate.textContent = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      attendeeList.innerHTML = "";
+      info.event.extendedProps.attendees.forEach(name => {
+        const li = document.createElement("li");
+        li.textContent = name;
+        attendeeList.appendChild(li);
+      });
+      calendarModal.classList.remove("hidden");
+    }
+  });
+  calendar.render();
 });
 
 closeModal.addEventListener("click", () => {
@@ -314,5 +287,6 @@ calendarModal.addEventListener("click", (e) => {
     calendarModal.classList.add("hidden");
   }
 });
+
 
 
