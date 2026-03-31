@@ -288,5 +288,28 @@ calendarModal.addEventListener("click", (e) => {
   }
 });
 
+function editField(id) {
+  const span = document.getElementById(id);
+  const currentValue = span.textContent;
+
+  span.innerHTML = "";
+
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = currentValue;
+
+  const saveBtn = document.createElement("button");
+  saveBtn.type = "button";
+  saveBtn.textContent = "Save";
+
+  saveBtn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    span.textContent = input.value;
+  });
+
+  span.appendChild(input);
+  span.appendChild(saveBtn);
+}
+
 
 
