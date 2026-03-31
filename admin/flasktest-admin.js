@@ -323,5 +323,22 @@ function editField(id) {
   span.appendChild(saveBtn);
 }
 
+function toggleMenu() {
+  const tabs = document.querySelector('.tabs');
+  tabs.classList.toggle('open');
+}
+
+function tab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+
+  document.getElementById('sec-' + id).classList.add('active');
+  btn.classList.add('active');
+
+  if (window.innerWidth <= 768) {
+    document.querySelector('.tabs').classList.remove('open');
+  }
+}
+
 
 
