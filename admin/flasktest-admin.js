@@ -11,11 +11,23 @@ let all = [], shown = [];
 // login for admin
 
 function login() {
-  if (document.getElementById('pw').value !== PWD) {
-    document.getElementById('err').style.display = 'block';
-    document.getElementById('pw').value = '';
+  const pwEl = document.getElementById('pw');
+  const errEl = document.getElementById('err');
+
+  if (!pwEl || !errEl) {
+    console.error('Admin panel login elements not found');
     return;
   }
+
+  console.log('Admin login attempt', pwEl.value);
+
+  if (pwEl.value !== PWD) {
+    errEl.style.display = 'block';
+    pwEl.value = '';
+    return;
+  }
+
+  errEl.style.display = 'none';
   document.getElementById('login').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
   loadMembers();
