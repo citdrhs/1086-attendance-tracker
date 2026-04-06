@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin 1086</title>
   <link rel="stylesheet" href="flasktest-admin.css">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+  <script src="flasktest-admin.js" defer></script>
 </head>
 <body>
 
@@ -33,8 +37,10 @@
       <button class="tab active" onclick="tab('members',this)">Members</button>
       <button class="tab" onclick="tab('atrisk',this)">At-Risk</button>
       <button class="tab" onclick="tab('report',this)">2-Week Report</button>
+      <button class="tab" onclick="tab('calendar',this)">Calendar</button>
     </div>
     <div class="header-right">
+      <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
       <button class="logout" onclick="logout()">Logout</button>
     </div>
   </header>
@@ -188,9 +194,25 @@
       </div>
     </div>
 
+     <!-- CALENDAR VIEW -->
+     <div id="sec-calendar" class="section">
+     <section class="calendar-section">
+      <div class="calendar-header">ATTENDANCE CALENDAR</div>
+      <div id="calendar"></div>
+    </section>
+    
+    <div id="eventModal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-btn" id="closeModal">&times;</span>
+        <h2 id="modalTitle">Meeting Info</h2>
+        <p><strong>Date:</strong> <span id="modalDate"></span></p>
+        <h3>Attendees</h3>
+        <ul id="attendeeList"></ul>
+      </div>
+    </div>
+  </div>
+
   </div>
 </div>
-
-<script src="flasktest-admin.js"></script>
 </body>
 </html>
