@@ -66,9 +66,13 @@
                     <option value="media">Media</option>
                 </select>
             </label>
-
-            <button id="submitBtn" class="primary login-only" type="submit">Login</button>
-            <p id="msg" class="msg" aria-live="polite"></p>
+            
+            <a href="{{ url_for('home') }}" class="nav-link active">
+                <button id="submitBtn" class="primary login-only" type="submit">Login</button>
+                <p id="msg" class="msg" aria-live="polite"></p>
+            </a>
+            
+            
 
         
         </form>
