@@ -1,83 +1,229 @@
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    background: #003971;
-    margin:0;
+body {
+    margin: 0;
+    min-height: 100vh;
+    background-image: url("team_photo.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: -1;
+}
+
+/* Navbar */
+.navbar {
+    font-size: 16px;
+    background-color: #1e3a8a;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    height: 100vh;
+    padding: 0 20px;
+}
+
+.nav-brand {
+    color: #fbbf24;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 1rem 0;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 1rem 0;
+}
+
+.nav-link:hover {
+    color: #fbbf24;
+}
+
+.nav-link.active {
+    color: #fbbf24;
+    border-bottom: 3px solid #fbbf24;
+}
+
+.nav-profile {
+    color: white;
+    text-decoration: none;
+    padding: 0.4rem 1rem;
+    border: 1px solid #fbbf24;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.nav-profile:hover,
+.nav-profile.active {
+    background-color: #fbbf24;
+    color: #1e3a8a;
+}
+
+/* Main Content */
+.main-content {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Profile Card */
+.profile-card {
+    background: white;
+    padding: 40px;
+    width: 520px;
+    border-radius: 16px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+    border-top: 5px solid #fbbf24;
+}
+
+.profile-card h2 {
+    text-align: center;
+    margin-bottom: 28px;
+    color: #1e3a8a;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* Profile Row */
+.profile-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 10px;
+}
+
+.profile-field label {
+    width: 110px;
+    font-weight: 600;
+    color: #1e3a8a;
+    flex-shrink: 0;
+}
+
+.profile-field span {
+    flex: 1;
+    color: #333;
+}
+
+.profile-field input {
+    flex: 1;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    display: none;
+}
+
+.profile-field input:focus {
+    outline: none;
+    border-color: #fbbf24;
+}
+
+/* Edit Button */
+.edit-btn {
+    background: #1e3a8a;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.edit-btn:hover {
+    background: #1e40af;
+}
+
+/* Status Message */
+#profile-msg {
+    text-align: center;
+    font-size: 14px;
+    color: #475569;
+    min-height: 20px;
+    margin-top: 8px;
+}
+
+/* Save Button */
+.save-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 0.75rem;
+    background-color: #1e3a8a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: none;
+}
+
+.save-btn:hover {
+    background-color: #1e40af;
+}
+
+/* Sign Out Button */
+.signout-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 0.75rem;
+    background-color: transparent;
+    color: #ef4444;
+    border: 1px solid #ef4444;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+.signout-btn:hover {
+    background-color: #ef4444;
+    color: white;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
     }
-    
-    /* TOP BAR (same as dashboard) */
-    
-    .navbar{
-    background:#0b1f4d;
-    color:white;
-    padding:14px 40px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+
+    .nav-menu {
+        gap: 1rem;
     }
-    
-    .logo{
-    font-weight:bold;
-    letter-spacing:1px;
+
+    .profile-card {
+        width: 92vw;
+        padding: 24px;
     }
-    
-    .logout{
-    background:#d4af37;
-    border:none;
-    padding:6px 14px;
-    border-radius:4px;
-    cursor:pointer;
-    font-weight:600;
-    }
-    
-    /* PAGE CENTER */
-    
-    .page{
-    display:flex;
-    justify-content:center;
-    margin-top:60px;
-    }
-    
-    /* PROFILE CARD */
-    
-    .profile-card{
-    background:white;
-    padding:45px;
-    width:520px;
-    border-radius:10px;
-    box-shadow:0 6px 18px rgba(0,0,0,0.15);
-    border-top:5px solid #d4af37;
-    }
-    
-    .profile-card h2{
-    text-align:center;
-    margin-bottom:25px;
-    color:#0b1f4d;
-    }
-    
-    /* PROFILE ROW */
-    
-    .profile-field{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:14px;
-    }
-    
-    .profile-field label{
-    width:130px;
-    font-weight:600;
-    color:#0b1f4d;
-    }
-    
-    .profile-field span{
-    flex:1;
-    color:#333;
-    }
-    
-    /* back button */
-    .small {margin: 14px 0 0; font-size: 13px; opacity: .9; }
-    
+}
