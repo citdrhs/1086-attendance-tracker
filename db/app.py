@@ -18,6 +18,9 @@ from sqlalchemy.sql import func
 from sqlalchemy.engine.reflection import Inspector
 from sqlalchemy.schema import DropConstraint, DropTable, MetaData, Table, ForeignKeyConstraint
 
+# improting migrate
+from flask_migrate import Migrate
+
 # importing dotenv
 from dotenv import load_dotenv
 
@@ -42,7 +45,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # creating migrate variable
-
+migrate = Migrate(app, db)
 
 # outdated template
 # class Test(db.Model):
