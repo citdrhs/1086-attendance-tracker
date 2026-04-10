@@ -27,14 +27,24 @@
             <img src="./static/logo.png" alt="Blue Cheese Robotics Logo" class="logo">
             <h1 class="title">Check In</h1>
             <p class="subtitle" id="member-name">Confirming attendance...</p>
+    
+            <div class="checkin-fields">
+                <label for="event-name">Event Name</label>
+                <input type="text" id="event-name" placeholder="Meeting Name" required>
+    
+                <label for="checkin-date">Date</label>
+                <input type="date" id="checkin-date" required>
+            </div>
+    
             <div class="button-container">
-                <form method="POST" action="./api/checkin">
-                    <button class="btn btn-primary" id="submit-btn" onclick="submitAttendance()">Submit Attendance</button>
-                </form>
+                <button class="btn btn-primary" type="button" id="submit-btn" onclick="submitAttendance()">Submit Attendance</button>
             </div>
             <p id="msg"></p>
         </div>
     </main>
+    
+    
+    
 
     <script src="./static/flasktest-submit.js"></script>
     <script src="./static/flasktest-nav.js"></script>
