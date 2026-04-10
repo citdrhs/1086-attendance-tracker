@@ -6,6 +6,10 @@ import os
 
 import psycopg2
 
+# date for the checkin
+
+from datetime import datetime
+
 # importing flask and it's related functions
 from flask import Flask, render_template, request, url_for, redirect
 
@@ -148,7 +152,11 @@ class Log(db.Model):
 
     uuid = db.Column(db.Integer, unique=True, primary_key=True, nullable=False)
     member_id = db.Column(db.Integer, db.ForeignKey("member.member_id"))
+    event_name = db.Column(db.String(100), nullable=True)
+    check_in_date = db.Column(db.Date, nullable=True)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+
+
 
 # Just in case:
     # firstname = db.Column(db.String(50), db.ForeignKey("member.firstname"))
@@ -316,20 +324,41 @@ def api_profile_put():
 
 @app.route("/api/checkin", methods=["POST"])
 def api_checkin():
-    # data = request.get_json()
-    member_id = Member.query.get(member_id)
+    data = request.get_json()
+    if not data:
+        return {"error": "No data provided."}, 400
+
+    member_id = data.get("member_id")
+    event_name = data.get("event_name")
+    check_in_date_str = data.get("check_in_date")
 
     if not member_id:
         return {"error": "member_id is required."}, 400
+    if not event_name:
+        return {"error": "Event name is required."}, 400
+    if not check_in_date_str:
+        return {"error": "Date is required."}, 400
 
     member = Member.query.get(member_id)
     if not member:
         return {"error": "Member not found."}, 404
 
-    log = Log(member_id=member_id)
+    try:
+        check_in_date = datetime.strptime(check_in_date_str, "%Y-%m-%d").date()
+    except ValueError:
+        return {"error": "Invalid date format."}, 400
+
+    log = Log(
+        member_id=member_id,
+        event_name=event_name.strip(),
+        check_in_date=check_in_date
+    )
     db.session.add(log)
     db.session.commit()
     return {"message": "Attendance recorded."}, 201
+
+
+
 
 @app.route("/api/members", methods=["GET"])
 def api_members():

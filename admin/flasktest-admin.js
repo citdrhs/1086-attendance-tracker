@@ -11,11 +11,23 @@ let all = [], shown = [];
 // login for admin
 
 function login() {
-  if (document.getElementById('pw').value !== PWD) {
-    document.getElementById('err').style.display = 'block';
-    document.getElementById('pw').value = '';
+  const pwEl = document.getElementById('pw');
+  const errEl = document.getElementById('err');
+
+  if (!pwEl || !errEl) {
+    console.error('Admin panel login elements not found');
     return;
   }
+
+  console.log('Admin login attempt', pwEl.value);
+
+  if (pwEl.value !== PWD) {
+    errEl.style.display = 'block';
+    pwEl.value = '';
+    return;
+  }
+
+  errEl.style.display = 'none';
   document.getElementById('login').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
   loadMembers();
@@ -162,8 +174,43 @@ function renderReport() {
 //}
 
 function downloadReport() {
-  window.print();
+  const headers = ['Name', 'Grade', 'Subteam', 'Type', 'Attended', 'Required', 'Total', 'Status', 'At Risk'];
+
+  const escape = (val) => {
+    const s = String(val ?? '');
+    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  };
+
+  const rows = all.map(m => {
+    const status = getStatus(m);
+    const required = m.type === 'Veteran' ? VET_MIN : ROO_MIN;
+    return [
+      m.name,
+      m.grade || '',
+      m.subteam,
+      m.type,
+      m.actual_n,
+      required,
+      TOTAL,
+      status,
+      m.risk ? 'Yes' : 'No'
+    ].map(escape).join(',');
+  });
+
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+
+  const today = new Date().toISOString().split('T')[0];
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `2-week-report-${today}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
+
 
 // mock data ( TO BE REMOVED WHEN CONNECTED TO BACKEND FLASK)
 
@@ -183,57 +230,159 @@ function getMockData() {
 }
 
 // profile card 
-document.getElementById("tMembers").addEventListener("click", function(e) {
-  const row = e.target.closest("tr");
-  if (!row) return;
+document.addEventListener("DOMContentLoaded", function () {
+  const profileModal = document.getElementById("profileModal");
+  const tMembers = document.getElementById("tMembers");
+  const profileCloseBtn = profileModal.querySelector(".close-btn");
 
-  // remove highlight from all rows
-  document.querySelectorAll("#tMembers tr").forEach(r => r.classList.remove("selected"));
+  tMembers.addEventListener("click", function (e) {
+    const row = e.target.closest("tr");
+    if (!row) return;
 
-  // add highlight to clicked row
-  row.classList.add("selected");
+    document.querySelectorAll("#tMembers tr").forEach(r => r.classList.remove("selected"));
+    row.classList.add("selected");
 
-  const cells = row.querySelectorAll("td");
+    const cells = row.querySelectorAll("td");
+    if (cells.length < 5) return;
 
-  document.getElementById("profileName").textContent = cells[0].innerText;
-  document.getElementById("profileGrade").textContent = cells[1].innerText;
-  document.getElementById("profileSubteam").textContent = cells[2].innerText;
-  document.getElementById("profileType").textContent = cells[3].innerText;
-  document.getElementById("profileMeetings").textContent = cells[4].innerText;
+    document.getElementById("profileName").textContent = cells[0].innerText;
+    document.getElementById("profileGrade").textContent = cells[1].innerText;
+    document.getElementById("profileSubteam").textContent = cells[2].innerText;
+    document.getElementById("profileType").textContent = cells[3].innerText;
+    document.getElementById("profileMeetings").textContent = cells[4].innerText;
 
-  modal.style.display = "block";
+    profileModal.style.display = "block";
+  });
+
+  profileCloseBtn.onclick = () => {
+    profileModal.style.display = "none";
+  };
+
+  window.addEventListener("click", function (e) {
+    if (e.target === profileModal) {
+      profileModal.style.display = "none";
+    }
+  });
 });
 
-document.querySelector(".close-btn").onclick = () => {
-  modal.style.display = "none";
-};
-
-window.onclick = (e) => {
-  if (e.target == modal) {
-      modal.style.display = "none";
+// CALENDAR VIEW
+const events = [
+  {
+    title: "Programming Meeting",
+    start: "2026-04-03",
+    extendedProps: {
+      attendees: ["Aatish Iyer", "Ishant Mekala", "Yathu Suryavanshi"]
+    }
+  },
+  {
+    title: "Media Meeting",
+    start: "2026-04-08",
+    extendedProps: {
+      attendees: ["Yagna Patel", "Ishant Mekala"]
+    }
+  },
+  {
+    title: "Build Session",
+    start: "2026-04-12",
+    extendedProps: {
+      attendees: ["Aditi Inamdar", "Yathu Suryavanshi"]
+    }
+  },
+  {
+    title: "Outreach Meeting",
+    start: "2026-04-17",
+    extendedProps: {
+      attendees: ["Nidhira Palakolanu"]
+    }
   }
-};
+];
+
+const calendarModal = document.getElementById("eventModal");
+const closeModal = document.getElementById("closeModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalDate = document.getElementById("modalDate");
+const attendeeList = document.getElementById("attendeeList");
+
+let calendar;
+
+document.addEventListener('DOMContentLoaded', function () {
+  const calendarEl = document.getElementById('calendar');
+
+  calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    initialDate: '2026-04-01',
+    height: 'auto',
+    events: events,
+    eventClick: function(info) {
+      modalTitle.textContent = info.event.title;
+
+      const date = new Date(info.event.start);
+      modalDate.textContent = date.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      });
+
+      attendeeList.innerHTML = "";
+      info.event.extendedProps.attendees.forEach(name => {
+        const li = document.createElement("li");
+        li.textContent = name;
+        attendeeList.appendChild(li);
+      });
+
+      calendarModal.classList.remove("hidden");
+    }
+  });
+
+  calendar.render();
+});
+
+function tab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+
+  document.getElementById('sec-' + id).classList.add('active');
+  btn.classList.add('active');
+
+  if (window.innerWidth <= 768) {
+    document.querySelector('.tabs').classList.remove('open');
+  }
+
+  if (id === 'calendar' && calendar) {
+    setTimeout(() => {
+      calendar.updateSize();
+    }, 50);
+  }
+}
+
+function toggleMenu() {
+  const tabs = document.querySelector('.tabs');
+  tabs.classList.toggle('open');
+}
 
 function editField(id) {
-
   const span = document.getElementById(id);
   const currentValue = span.textContent;
 
+  span.innerHTML = "";
+
   const input = document.createElement("input");
+  input.type = "text";
   input.value = currentValue;
 
   const saveBtn = document.createElement("button");
+  saveBtn.type = "button";
   saveBtn.textContent = "Save";
 
-  saveBtn.onclick = () => {
+  saveBtn.addEventListener("click", function (e) {
+    e.stopPropagation();
     span.textContent = input.value;
-    input.remove();
-    saveBtn.remove();
-  };
+  });
 
-  span.textContent = "";
   span.appendChild(input);
   span.appendChild(saveBtn);
 }
+
+
 
 

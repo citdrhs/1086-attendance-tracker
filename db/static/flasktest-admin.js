@@ -142,6 +142,41 @@ function renderReport() {
 //}
 
 function downloadReport() {
-  window.print();
+  const headers = ['Name', 'Grade', 'Subteam', 'Type', 'Attended', 'Required', 'Total', 'Status', 'At Risk'];
+
+  const escape = (val) => {
+    const s = String(val ?? '');
+    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  };
+
+  const rows = all.map(m => {
+    const status = getStatus(m);
+    const required = m.type === 'Veteran' ? VET_MIN : ROO_MIN;
+    return [
+      m.name,
+      m.grade || '',
+      m.subteam,
+      m.type,
+      m.actual_n,
+      required,
+      TOTAL,
+      status,
+      m.risk ? 'Yes' : 'No'
+    ].map(escape).join(',');
+  });
+
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+
+  const today = new Date().toISOString().split('T')[0];
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `2-week-report-${today}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
+
 
