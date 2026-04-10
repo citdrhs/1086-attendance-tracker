@@ -179,4 +179,157 @@ function downloadReport() {
   URL.revokeObjectURL(url);
 }
 
+// profile card 
+document.addEventListener("DOMContentLoaded", function () {
+  const profileModal = document.getElementById("profileModal");
+  const tMembers = document.getElementById("tMembers");
+  const profileCloseBtn = profileModal.querySelector(".close-btn");
+
+  tMembers.addEventListener("click", function (e) {
+    const row = e.target.closest("tr");
+    if (!row) return;
+
+    document.querySelectorAll("#tMembers tr").forEach(r => r.classList.remove("selected"));
+    row.classList.add("selected");
+
+    const cells = row.querySelectorAll("td");
+    if (cells.length < 5) return;
+
+    document.getElementById("profileName").textContent = cells[0].innerText;
+    document.getElementById("profileGrade").textContent = cells[1].innerText;
+    document.getElementById("profileSubteam").textContent = cells[2].innerText;
+    document.getElementById("profileType").textContent = cells[3].innerText;
+    document.getElementById("profileMeetings").textContent = cells[4].innerText;
+
+    profileModal.style.display = "block";
+  });
+
+  profileCloseBtn.onclick = () => {
+    profileModal.style.display = "none";
+  };
+
+  window.addEventListener("click", function (e) {
+    if (e.target === profileModal) {
+      profileModal.style.display = "none";
+    }
+  });
+});
+
+// CALENDAR VIEW
+const events = [
+  {
+    title: "Programming Meeting",
+    start: "2026-04-03",
+    extendedProps: {
+      attendees: ["Aatish Iyer", "Ishant Mekala", "Yathu Suryavanshi"]
+    }
+  },
+  {
+    title: "Media Meeting",
+    start: "2026-04-08",
+    extendedProps: {
+      attendees: ["Yagna Patel", "Ishant Mekala"]
+    }
+  },
+  {
+    title: "Build Session",
+    start: "2026-04-12",
+    extendedProps: {
+      attendees: ["Aditi Inamdar", "Yathu Suryavanshi"]
+    }
+  },
+  {
+    title: "Outreach Meeting",
+    start: "2026-04-17",
+    extendedProps: {
+      attendees: ["Nidhira Palakolanu"]
+    }
+  }
+];
+
+const calendarModal = document.getElementById("eventModal");
+const closeModal = document.getElementById("closeModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalDate = document.getElementById("modalDate");
+const attendeeList = document.getElementById("attendeeList");
+
+let calendar;
+
+document.addEventListener('DOMContentLoaded', function () {
+  const calendarEl = document.getElementById('calendar');
+
+  calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    initialDate: '2026-04-01',
+    height: 'auto',
+    events: events,
+    eventClick: function(info) {
+      modalTitle.textContent = info.event.title;
+
+      const date = new Date(info.event.start);
+      modalDate.textContent = date.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      });
+
+      attendeeList.innerHTML = "";
+      info.event.extendedProps.attendees.forEach(name => {
+        const li = document.createElement("li");
+        li.textContent = name;
+        attendeeList.appendChild(li);
+      });
+
+      calendarModal.classList.remove("hidden");
+    }
+  });
+
+  calendar.render();
+});
+
+function tab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+
+  document.getElementById('sec-' + id).classList.add('active');
+  btn.classList.add('active');
+
+  if (window.innerWidth <= 768) {
+    document.querySelector('.tabs').classList.remove('open');
+  }
+
+  if (id === 'calendar' && calendar) {
+    setTimeout(() => {
+      calendar.updateSize();
+    }, 50);
+  }
+}
+
+function toggleMenu() {
+  const tabs = document.querySelector('.tabs');
+  tabs.classList.toggle('open');
+}
+
+function editField(id) {
+  const span = document.getElementById(id);
+  const currentValue = span.textContent;
+
+  span.innerHTML = "";
+
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = currentValue;
+
+  const saveBtn = document.createElement("button");
+  saveBtn.type = "button";
+  saveBtn.textContent = "Save";
+
+  saveBtn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    span.textContent = input.value;
+  });
+
+  span.appendChild(input);
+  span.appendChild(saveBtn);
+}
 
