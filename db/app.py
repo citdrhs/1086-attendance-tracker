@@ -51,6 +51,15 @@ db = SQLAlchemy(app)
 # creating migrate variable
 migrate = Migrate(app, db)
 
+# some commands for migrating
+
+# flask db stamp head makes this version of the database the most recent one.
+# run it if there is a flask_migrate "Can't lovate revision" error
+# if still not working, drop the alembic_version table in psql
+
+
+
+
 # outdated template
 # class Test(db.Model):
 #     # creating the columns, with datatypes and constraints
