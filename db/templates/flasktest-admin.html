@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin 1086</title>
-  <link rel="stylesheet" href="./admin/flasktest-admin.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='flasktest-admin.css') }}">
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-  <script src="/admin/flasktest-admin.js" defer></script>
+  <script src="{{ url_for('static', filename='flasktest-admin.js') }}" defer></script>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div id="login">
   <div class="login-box">
-    <img src="./static/admin_logo.png" alt="Blue Cheese Robotics Logo" class="login-logo">
+    <img src="{{ url_for('static', filename='admin_logo.png') }}" alt="Blue Cheese Robotics Logo" class="login-logo">
     <h1>Admin</h1>
     <p>1086 Robotics</p>
     <p class="err" id="err">Incorrect password. Please Try again.</p>
@@ -21,8 +23,8 @@
     <button onclick="login()">Enter →</button>
 
     <p id="backBtn" class="small">
-      <a href="./home">Back to home</a>
-  </p>
+      <a href="{{ url_for('home') }}">Back to home</a>
+    </p>
   </div>
 </div>
 
@@ -30,7 +32,7 @@
 <div id="app">
   <header>
     <div class="brand">
-      <img src="/static/admin_logo.png" alt="Blue Cheese Robotics Logo" class="brand img">
+      <img src="{{ url_for('static', filename='admin_logo.png') }}" alt="Blue Cheese Robotics Logo" class="brand img">
     </div>
     <div class="tabs">
       <button class="tab active" onclick="tab('members',this)">Members</button>
@@ -42,7 +44,7 @@
       <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
       <button class="logout" onclick="logout()">Logout</button>
     </div>
-  </header>>
+  </header>
 
   <div class="toolbar">
     <select id="fSub" onchange="filter()">
@@ -86,6 +88,33 @@
       </div>
     </div>
 
+    <div id="profileModal" class="profile-modal">
+      <div class="profile-card">
+        <span class="close-btn">&times;</span>
+        <div class="profile-header">
+          <h2 id="profileName"></h2>
+          <span id="profileType" class="type-badge"></span>
+        </div>
+        <div class="profile-body">
+          <p>
+            <strong>Grade:</strong>
+            <span id="profileGrade"></span>
+            <button onclick="editField('profileGrade')">Edit</button>
+          </p>
+          <p>
+            <strong>Subteam:</strong>
+            <span id="profileSubteam"></span>
+            <button onclick="editField('profileSubteam')">Edit</button>
+          </p>
+          <p>
+            <strong>Meetings Attended:</strong>
+            <span id="profileMeetings"></span>
+            <button onclick="editField('profileMeetings')">Edit</button>
+          </p>
+        </div>
+      </div>
+    </div>
+
     <!-- AT-RISK -->
     <div id="sec-atrisk" class="section">
       <div class="card">
@@ -117,7 +146,7 @@
           <h2>2-Week Report</h2>
           <span id="reportSummary"></span>
         </div>
-        <div style="padding:0.75rem 1.25rem;background:#e8edf7;border-bottom:1px solid #d1d9ef;display:flex;justify-content:flex-end">
+        <div style="padding:0.75rem 1.25rem;background:#e8edf7;border-bottom:1px solid #d1d9ef;display:flex;justify-content:flex-end;flex-wrap:wrap;gap:0.5rem">
           <button onclick="downloadReport()" style="background:#1e3a8a;color:#fbbf24;border:none;border-radius:5px;padding:0.4rem 1rem;font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer">↓ Download CSV file</button>
         </div>
         <div class="table-wrap">
@@ -138,26 +167,24 @@
       </div>
     </div>
 
-  </div>
-</div>
-
-<!-- CALENDAR VIEW -->
+    <!-- CALENDAR VIEW -->
     <div id="sec-calendar" class="section">
       <section class="calendar-section">
-      <div class="calendar-header">ATTENDANCE CALENDAR</div>
-      <div id="calendar"></div>
-    </section>
-
-    <div id="eventModal" class="modal hidden">
-      <div class="modal-content">
-        <span class="close-btn" id="closeModal">&times;</span>
-        <h2 id="modalTitle">Meeting Info</h2>
-        <p><strong>Date:</strong> <span id="modalDate"></span></p>
-        <h3>Attendees</h3>
-        <ul id="attendeeList"></ul>
+        <div class="calendar-header">ATTENDANCE CALENDAR</div>
+        <div id="calendar"></div>
+      </section>
+      <div id="eventModal" class="modal hidden">
+        <div class="modal-content">
+          <span class="close-btn" id="closeModal">&times;</span>
+          <h2 id="modalTitle">Meeting Info</h2>
+          <p><strong>Date:</strong> <span id="modalDate"></span></p>
+          <h3>Attendees</h3>
+          <ul id="attendeeList"></ul>
+        </div>
       </div>
     </div>
-    </div>
 
+  </div>
+</div>
 </body>
 </html>

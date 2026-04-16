@@ -4,21 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - Blue Cheese Robotics</title>
-    <link rel="stylesheet" href="student-profile/flasktest-profile.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='flasktest-profile.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">Blue Cheese Robotics</div>
+            <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
             <ul class="nav-menu">
-                <li><a href="./home" class="nav-link">Home</a></li>
-                <li><a href="./information" class="nav-link">Information</a></li>
-                <li><a href="./camera" class="nav-link">Camera</a></li>
-                <li><a href="./admin" class="nav-link">Admin Panel</a></li>
+                <li><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
+                <li><a href="{{ url_for('information') }}" class="nav-link">Information</a></li>
+                <li><a href="{{ url_for('camera') }}" class="nav-link">Camera</a></li>
+                <li><a href="{{ url_for('admin') }}" class="nav-link">Admin Panel</a></li>
+                <li><a href="{{ url_for('profile') }}" class="nav-link active">Profile</a></li>
+                <li class="mobile-only"><a href="{{ url_for('auth') }}" class="nav-link nav-logout">Sign In</a></li>
             </ul>
-            <a href="./profile" id="nav-profile" class="nav-link nav-logout active">Profile</a>
-            <a href="./" id="nav-signin" class="nav-link nav-logout">Sign In</a>
+            <a href="{{ url_for('auth') }}" id="nav-signin" class="nav-link nav-logout desktop-only">Sign In</a>
         </div>
     </nav>
 
@@ -71,7 +73,7 @@
         </div>
     </main>
 
-    <script src="./static/flasktest-nav.js"></script>
-    <script src="./studentprofile/flasktest-profile.js"></script>
+    <script src="{{ url_for('static', filename='flasktest-nav.js') }}"></script>
+    <script src="{{ url_for('static', filename='flasktest-profile.js') }}"></script>
 </body>
 </html>
