@@ -80,7 +80,7 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const res = await fetch(
-mode === "login" ? "https://drhscit.org/att1086/api/login" : "https://drhscit.org/att1086/api/signup",
+      mode === "login" ? "/att1086/api/login" : "/att1086/api/signup",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -103,7 +103,7 @@ mode === "login" ? "https://drhscit.org/att1086/api/login" : "https://drhscit.or
     if (mode === "login" && data.member_id) {
       localStorage.setItem("member_id", data.member_id);
     }
-    window.location.href = "/home";
+    window.location.href = "/att1086/home";
 
   } catch (err) {
     msg.textContent = "Network error. Is server running?";
