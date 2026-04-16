@@ -35,9 +35,8 @@ function toggleMenu() {
 async function loadProfile() {
     const msg = document.getElementById("profile-msg");
     if (!memberId) {
-        msg.textContent = "Please sign in to view your profile.";
         document.getElementById("save-btn").disabled = true;
-        document.getElementById("signout-btn").textContent = "Sign In";
+        document.getElementById("signout-btn").textContent = "Sign Out";
         document.getElementById("usernameText").textContent = "—";
         document.getElementById("passwordText").textContent = "—";
         document.getElementById("nameText").textContent = "—";
