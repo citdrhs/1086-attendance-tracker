@@ -41,6 +41,20 @@ body::before {
     padding: 1rem 0;
 }
 
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 1rem;
+}
+
+.hamburger:hover {
+    color: #fbbf24;
+}
+
 .nav-menu {
     display: flex;
     list-style: none;
@@ -62,21 +76,12 @@ body::before {
     border-bottom: 3px solid #fbbf24;
 }
 
-.nav-profile {
-    color: white;
-    text-decoration: none;
-    padding: 0.4rem 1rem;
-    border: 1px solid #fbbf24;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    white-space: nowrap;
+.mobile-only {
+    display: none;
 }
 
-.nav-profile:hover,
-.nav-profile.active {
-    background-color: #fbbf24;
-    color: #1e3a8a;
+.desktop-only {
+    display: inline-flex;
 }
 
 /* Main Content */
@@ -215,11 +220,48 @@ body::before {
 
 @media (max-width: 768px) {
     .nav-container {
+        position: relative;
         flex-direction: column;
     }
 
+    .hamburger {
+        display: block;
+    }
+
     .nav-menu {
-        gap: 1rem;
+        display: none;
+        flex-direction: column;
+        position: relative;
+        width: 100%;
+        background: #1e3a8a;
+        gap: 0;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .nav-menu.open {
+        display: flex;
+    }
+
+    .nav-menu li {
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .nav-menu li:last-child {
+        border-bottom: none;
+    }
+
+    .nav-link {
+        display: block;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .desktop-only {
+        display: none;
+    }
+
+    .mobile-only {
+        display: block;
     }
 
     .profile-card {
