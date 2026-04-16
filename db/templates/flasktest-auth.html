@@ -15,7 +15,7 @@
             <button id="tabSignup" class="tab" type="button">Sign Up</button> 
         </div>
 
-        <form id="form" class="form">
+        <form id="form" class="form" action="{{ url_for('api_signup') }}" method="post">
             <label>
                 Username
                 <input id="username" type="text" autocomplete="username" name="username" required/>
