@@ -12,7 +12,25 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "/auth";
         }
     });
+
+    const navMenu = document.querySelector('.nav-menu');
+    if (navMenu) {
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768 && navMenu.classList.contains('open')) {
+                    navMenu.classList.remove('open');
+                }
+            });
+        });
+    }
 });
+
+function toggleMenu() {
+    const navMenu = document.querySelector('.nav-menu');
+    if (navMenu) {
+        navMenu.classList.toggle('open');
+    }
+}
 
 async function loadProfile() {
     const msg = document.getElementById("profile-msg");
