@@ -80,6 +80,10 @@ body::before {
     border-bottom: 3px solid #fbbf24;
 }
 
+.mobile-only {
+    display: none;
+}
+
 /* Main Content */
 .main-content {
     min-height: calc(100vh - 60px);
@@ -168,10 +172,8 @@ body::before {
     .nav-menu {
         display: none;
         flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
+        position: relative;
+        width: 100%;
         background: #1e3a8a;
         gap: 0;
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -193,6 +195,14 @@ body::before {
         display: block;
         padding: 1rem;
         text-align: center;
+    }
+
+    .desktop-only {
+        display: none;
+    }
+
+    .mobile-only {
+        display: block;
     }
 
     .hero-section {
