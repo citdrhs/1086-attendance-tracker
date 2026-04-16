@@ -176,6 +176,15 @@ header {
     color: white;
 }
 
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
 /* Toolbar */
 
 .toolbar {
@@ -526,6 +535,12 @@ tbody td {
     overflow: hidden;
     box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
+
+    .profile-card {
+      width: 100%;
+      max-width: 420px;
+      margin: 1.5rem auto;
+    }
 
     .calendar-header {
         background: #2336b3;
