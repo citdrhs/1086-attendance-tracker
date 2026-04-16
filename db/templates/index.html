@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1086 Attendance Tracker - Blue Cheese Robotics</title>
+    <link rel="stylesheet" href="flasktest-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">Blue Cheese Robotics</div>
+            <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="flasktest-information.html" class="nav-link">Information</a></li>
+                <li><a href="camera/flasktest-camera.html" class="nav-link">Camera</a></li>
+                <li><a href="admin/flasktest-admin.html" class="nav-link">Admin Panel</a></li>
+                <li class="mobile-only"><a href="flasktest-profile.html" class="nav-link nav-logout">Profile</a></li>
+                <li class="mobile-only"><a href="flasktest-auth.html" class="nav-link nav-logout">Sign In</a></li>
+            </ul>
+            <a href="flasktest-profile.html" id="nav-profile" class="nav-link nav-logout desktop-only">Profile</a>
+            <a href="flasktest-auth.html" id="nav-signin" class="nav-link nav-logout desktop-only">Sign In</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="hero-section">
+            <img src="logo.png" alt="Blue Cheese Robotics Logo" class="logo">
+            <h1 class="title">1086 Attendance Tracker</h1>
+            <p class="subtitle">Deep Run High School</p>
+            <div class="button-container">
+                <a href="camera/flasktest-camera.html" class="btn btn-primary">Check In</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            navMenu.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
