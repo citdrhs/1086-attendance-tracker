@@ -1,24 +1,40 @@
-const memberId = localStorage.getItem("member_id");
+let memberId = localStorage.getItem("member_id");
 
 document.addEventListener("DOMContentLoaded", () => {
     loadProfile();
 
     document.getElementById("save-btn").addEventListener("click", saveProfile);
     document.getElementById("signout-btn").addEventListener("click", () => {
-        localStorage.removeItem("member_id");
-        window.location.href = "/";
+        if (memberId) {
+            localStorage.removeItem("member_id");
+            window.location.href = "/";
+        } else {
+            window.location.href = "/auth";
+        }
     });
 });
 
 async function loadProfile() {
+    const msg = document.getElementById("profile-msg");
     if (!memberId) {
-        window.location.href = "/";
+        msg.textContent = "Please sign in to view your profile.";
+        document.getElementById("save-btn").disabled = true;
+        document.getElementById("signout-btn").textContent = "Sign In";
+        document.getElementById("usernameText").textContent = "—";
+        document.getElementById("passwordText").textContent = "—";
+        document.getElementById("nameText").textContent = "—";
+        document.getElementById("emailText").textContent = "—";
+        document.getElementById("statusText").textContent = "—";
+        document.getElementById("subteamText").textContent = "—";
+        document.getElementById("gradeText").textContent = "—";
         return;
     }
 
     const res = await fetch("/api/profile?member_id=" + memberId);
     if (!res.ok) {
-        window.location.href = "/";
+        msg.textContent = "Unable to load profile. Please sign in again.";
+        document.getElementById("save-btn").disabled = true;
+        document.getElementById("signout-btn").textContent = "Sign In";
         return;
     }
 
