@@ -215,38 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// CALENDAR VIEW - replace with actual database stuff
-const events = [
-  {
-    title: "Programming Meeting",
-    start: "2026-04-03",
-    extendedProps: {
-      attendees: ["Aatish Iyer", "Ishant Mekala", "Yathu Suryavanshi"]
-    }
-  },
-  {
-    title: "Media Meeting",
-    start: "2026-04-08",
-    extendedProps: {
-      attendees: ["Yagna Patel", "Ishant Mekala"]
-    }
-  },
-  {
-    title: "Build Session",
-    start: "2026-04-12",
-    extendedProps: {
-      attendees: ["Aditi Inamdar", "Yathu Suryavanshi"]
-    }
-  },
-  {
-    title: "Outreach Meeting",
-    start: "2026-04-17",
-    extendedProps: {
-      attendees: ["Nidhira Palakolanu"]
-    }
-  }
-];
-
+// CALENDAR VIEW - pulls real meetings + attendees from the database
 const calendarModal = document.getElementById("eventModal");
 const closeModal = document.getElementById("closeModal");
 const modalTitle = document.getElementById("modalTitle");
@@ -260,9 +229,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
-    initialDate: '2026-04-01',
     height: 'auto',
-    events: events,
+    events: function(info, successCallback, failureCallback) {
+      fetch('/api/events')
+        .then(r => r.json())
+        .then(successCallback)
+        .catch(failureCallback);
+    },
     eventClick: function(info) {
       modalTitle.textContent = info.event.title;
 

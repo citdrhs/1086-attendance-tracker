@@ -462,6 +462,24 @@ def api_login():
     return {"message": "Login successful.", "member_id": member.member_id}, 200
 
 
+@app.route("/api/events", methods=["GET"])
+def api_events():
+    rows = db.session.query(Log, Member).join(Member, Log.member_id == Member.member_id).all()
+    events = {}
+    for log, member in rows:
+        if not log.event_name or not log.check_in_date:
+            continue
+        key = (log.event_name, log.check_in_date.isoformat())
+        if key not in events:
+            events[key] = {
+                "title": log.event_name,
+                "start": log.check_in_date.isoformat(),
+                "extendedProps": {"attendees": []}
+            }
+        events[key]["extendedProps"]["attendees"].append(member.name)
+    return list(events.values())
+
+
 @app.route("/members", methods=["GET"])
 def display_users():
     members = Member.query.all()
