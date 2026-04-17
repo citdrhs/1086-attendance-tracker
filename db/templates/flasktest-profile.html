@@ -1,33 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- basic setup -->
     <meta charset="UTF-8">
+    
+    <!-- mobile responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- page title -->
     <title>Profile - Blue Cheese Robotics</title>
+    
+    <!-- css file -->
     <link rel="stylesheet" href="{{ url_for('static', filename='flasktest-profile.css') }}">
+    
+    <!-- font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    
+    <!-- navbar -->
     <nav class="navbar">
         <div class="nav-container">
+            
+            <!-- brand -->
             <div class="nav-brand">Blue Cheese Robotics</div>
+            
+            <!-- mobile menu -->
             <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
+            
+            <!-- links -->
             <ul class="nav-menu">
                 <li><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
                 <li><a href="{{ url_for('information') }}" class="nav-link">Information</a></li>
                 <li><a href="{{ url_for('camera') }}" class="nav-link">Camera</a></li>
                 <li><a href="{{ url_for('admin') }}" class="nav-link">Admin Panel</a></li>
                 <li><a href="{{ url_for('profile') }}" class="nav-link active">Profile</a></li>
+                
+                <!-- mobile logout -->
                 <li class="mobile-only"><a href="{{ url_for('auth') }}" class="nav-link nav-logout">Logout</a></li>
             </ul>
+            
+            <!-- desktop logout -->
             <a href="{{ url_for('auth') }}" id="nav-signin" class="nav-link nav-logout desktop-only">Logout</a>
         </div>
     </nav>
 
+    <!-- main profile section -->
     <main class="main-content">
         <div class="profile-card">
+            
+            <!-- title -->
             <h2>Account Profile</h2>
 
+            <!-- username -->
             <div class="profile-field">
                 <label>Username</label>
                 <span id="usernameText"></span>
@@ -35,6 +60,7 @@
                 <button class="edit-btn" onclick="editField('username')">Edit</button>
             </div>
 
+            <!-- password -->
             <div class="profile-field">
                 <label>Password</label>
                 <span id="passwordText">••••••••</span>
@@ -42,37 +68,46 @@
                 <button class="edit-btn" onclick="editField('password')">Edit</button>
             </div>
 
+            <!-- full name -->
             <div class="profile-field">
                 <label>Full Name</label>
                 <span id="nameText"></span>
             </div>
 
+            <!-- email -->
             <div class="profile-field">
                 <label>Email</label>
                 <span id="emailText"></span>
             </div>
 
+            <!-- status -->
             <div class="profile-field">
                 <label>Status</label>
                 <span id="statusText"></span>
             </div>
 
+            <!-- subteam -->
             <div class="profile-field">
                 <label>Subteam</label>
                 <span id="subteamText"></span>
             </div>
 
+            <!-- grade -->
             <div class="profile-field">
                 <label>Grade</label>
                 <span id="gradeText"></span>
             </div>
 
+            <!-- message -->
             <p id="profile-msg"></p>
+
+            <!-- buttons -->
             <button id="save-btn" class="save-btn">Save Changes</button>
             <button id="signout-btn" class="signout-btn">Sign Out</button>
         </div>
     </main>
 
+    <!-- scripts -->
     <script src="{{ url_for('static', filename='flasktest-nav.js') }}"></script>
     <script src="{{ url_for('static', filename='flasktest-profile.js') }}"></script>
 </body>
