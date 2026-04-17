@@ -25,19 +25,18 @@ from sqlalchemy.schema import DropConstraint, DropTable, MetaData, Table, Foreig
 # improting migrate
 from flask_migrate import Migrate
 
-# importing dotenv
+# importing dotenv and loading
 from dotenv import load_dotenv
-
 load_dotenv()
 
+
+# creating the flask application instance
 app = Flask(__name__)
 
 
 
 # setting the base directory to the current file's directory
 basedir = os.path.abspath(os.path.dirname(__file__))
-
-# creating the flask application instance
 
 
 # configuration keys for SQLAlchemy, the first is for specifying which database to connect to
@@ -54,13 +53,22 @@ migrate = Migrate(app, db)
 # some commands for migrating
 
 # flask db stamp head makes this version of the database the most recent one.
-# run it if there is a flask_migrate "Can't lovate revision" error
-# if still not working, drop the alembic_version table in psql
+# run it if there is a flask_migrate "Can't locate revision" error, or an
+# error with local and server database changes
+# if still not working, drop the alembic_version table in psql and unnecessary constraints
+
+# flask db migrate -m "enter message" will push this version of the database to the versions folder
+# you will need this to update the database
+
+# flask db upgrade upgrades the database, setting it to the most recent migrated version
+
+# to run any of these commands without the flask shell, because you can't use flask shell on school computer, 
+# use python -m flask in front of the command - for example, python -m flask db stamp head
 
 
 
 
-# outdated template
+# outdated template - used previously, backup for possible future use
 # class Test(db.Model):
 #     # creating the columns, with datatypes and constraints
 #     uid = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
@@ -77,14 +85,14 @@ migrate = Migrate(app, db)
 
 
 class PrimarySubteam(db.Model):
-    # creating the columns, with datatypes and constraints
+    # creating the columns, with datatypes and constraints for the primary subteam
     __tablename__ = "p_subteam"
 
     p_subteam_id = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
     p_subteam_name = db.Column(db.String(50), nullable = False)
 
 
-
+# use if able to get secondary subteams - we were not able to get this working with out time constraints
 # class SecondarySubteam(db.Model):
 #     # creating the columns, with datatypes and constraints
 #     __tablename__ = "s_subteam"
@@ -95,7 +103,7 @@ class PrimarySubteam(db.Model):
 
 
 class Member(db.Model):
-    # creating the columns, with datatypes and constraints
+    # creating the columns, with datatypes and constraints, for each individual member
     __tablename__ = "member"
 
     member_id = db.Column(db.Integer, unique = True, primary_key = True, nullable = False)
@@ -108,7 +116,7 @@ class Member(db.Model):
     grade = db.Column(db.Integer, nullable = True)
 
 
-
+# suggested use of organization by Mr. Miller that was scrapped
 # class TeamMember(db.Model):
 #     # creating the columns, with datatypes and constraints
 #     __tablename__ = "team_member"
@@ -121,7 +129,7 @@ class Member(db.Model):
 
 
 class Veteran(db.Model):
-    # creating the columns, with datatypes and constraints
+    # creating the columns, with datatypes and constraints, for veterans
     __tablename__ = "veteran"
 
     uuid = db.Column(db.Integer, unique = True, primary_key=True, nullable=False)
@@ -130,7 +138,7 @@ class Veteran(db.Model):
 
     
 class Rookie(db.Model):
-    # creating the columns, with datatypes and constraints
+    # creating the columns, with datatypes and constraints, for rookies
     __tablename__ = "rookie"
 
     uuid = db.Column(db.Integer, unique = True, primary_key=True, nullable=False)
@@ -139,7 +147,7 @@ class Rookie(db.Model):
 
 
 class InSeason(db.Model):
-    # creating the columns, with datatypes and constraints
+    # creating the columns, with datatypes and constraints - inseason
     __tablename__ = "fulltime"
 
     uuid = db.Column(db.Integer, unique = True, primary_key=True, nullable=False)
@@ -148,7 +156,7 @@ class InSeason(db.Model):
 
     
 class OffSeason(db.Model):
-    # creating the columns, with datatypes and constraints
+    # creating the columns, with datatypes and constraints - outseason
     __tablename__ = "parttime"
 
     uuid = db.Column(db.Integer, unique = True, primary_key=True, nullable=False)
@@ -157,6 +165,7 @@ class OffSeason(db.Model):
 
 
 class Log(db.Model):
+    # creating thee log where each attendance should be stored
     __tablename__ = "scanning_log"
 
     uuid = db.Column(db.Integer, unique=True, primary_key=True, nullable=False)
@@ -200,9 +209,11 @@ class Log(db.Model):
 # db.session.add_all([programming, build, cad, advocacy, impact, outreach, media])
 # db.session.add_all([programming2, build2, cad2, advocacy2, impact2, outreach2, media2])
 # db.session.commit()
+    
+# old syntax for establishing tables, don't think it is necessary with migrations
 
 
-# creating the tables
+# creating the tables - function
 def create_tables():
     with app.app_context():
         db.create_all()
@@ -245,7 +256,10 @@ create_tables()
 
 
 
-    
+# here are connections to website all down below
+# the general idea is that it renders the template of the html file, which is connected to the database data
+# if one of these functions is larger, that means that there is more going on behind it, such as fetching member data
+
 @app.route("/")
 def index():
     return render_template("flasktest-auth.html")
@@ -278,6 +292,9 @@ def checkin():
 def profile():
     return render_template("flasktest-profile.html")
 
+# all more basic routing so far. here is a more complex one
+
+# using get method to get data
 @app.route("/api/profile", methods=["GET"])
 def api_profile_get():
     member_id = request.args.get("member_id")
@@ -294,6 +311,7 @@ def api_profile_get():
         if subteam:
             subteam_name = subteam.p_subteam_name.capitalize()
 
+    # returning member information
     return {
         "username": member.username,
         "name": member.name,
@@ -304,6 +322,7 @@ def api_profile_get():
     }, 200
 
 
+# putting data
 @app.route("/api/profile", methods=["PUT"])
 def api_profile_put():
     data = request.get_json()
@@ -327,10 +346,12 @@ def api_profile_put():
     if new_password:
         member.password = new_password
 
+    # commit to the database session, which changes database
     db.session.commit()
     return {"message": "Profile updated."}, 200
 
 
+# checking in, so posting data
 @app.route("/api/checkin", methods=["POST"])
 def api_checkin():
     data = request.get_json()
@@ -357,18 +378,21 @@ def api_checkin():
     except ValueError:
         return {"error": "Invalid date format."}, 400
 
+    # updates the scanning log with data after session commit
     log = Log(
         member_id=member_id,
         event_name=event_name.strip(),
         check_in_date=check_in_date
     )
+
+    # adding and commiting to session
     db.session.add(log)
     db.session.commit()
     return {"message": "Attendance recorded."}, 201
 
 
 
-
+# fetching member data
 @app.route("/api/members", methods=["GET"])
 def api_members():
     members = Member.query.all()
@@ -392,6 +416,7 @@ def api_members():
         })
     return result
 
+# route for signup
 @app.route("/api/signup", methods=["POST"])
 def api_signup():
     data = request.get_json()
@@ -423,7 +448,7 @@ def api_signup():
     db.session.commit()
     return {"message": "Account created."}, 201
 
-
+# route for login
 @app.route("/api/login", methods=["POST"])
 def api_login():
     data = request.get_json()
@@ -443,6 +468,6 @@ def display_users():
     return render_template("flasktest-members.html", members=members)
 
 
-
+# running app
 if __name__ == "__main__":
     app.run(debug=True)
