@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve 1086-attendance-tracker
+After=network.target
+
+[Service]
+User=att1086
+Group=www-data
+WorkingDirectory=/home/att1086/www
+Environment=PATH=/home/att1086/www/venv/bin SCRIPT_NAME=/att1086
+ExecStart=/home/att1086/venv/bin/gunicorn --workers 3 --bind unix:att1086.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target
