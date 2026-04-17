@@ -28,21 +28,21 @@
             <!-- mobile menu button -->
             <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
             
-            <!-- nav links -->
+
+
             <ul class="nav-menu">
-                <li><a href="./home" class="nav-link active">Home</a></li>
-                <li><a href="./information" class="nav-link">Information</a></li>
-                <li><a href="./camera" class="nav-link">Camera</a></li>
-                <li><a href="./admin" class="nav-link">Admin Panel</a></li>
-
-                <!-- mobile only links -->
-                <li class="mobile-only"><a href="/att1086/profile" class="nav-link">Profile</a></li>
-                <li class="mobile-only"><a href="/att1086/" class="nav-link nav-logout">Logout</a></li>
+                <li><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
+                <li><a href="{{ url_for('information') }}" class="nav-link">Information</a></li>
+                <li><a href="{{ url_for('camera') }}" class="nav-link">Camera</a></li>
+                <li><a href="{{ url_for('admin') }}" class="nav-link">Admin Panel</a></li>
+                <li><a href="{{ url_for('profile') }}" class="nav-link active">Profile</a></li>
+                
+                <!-- mobile logout -->
+                <li class="mobile-only"><a href="{{ url_for('auth') }}" class="nav-link nav-logout">Logout</a></li>
             </ul>
-
-            <!-- desktop links -->
-            <a href="/att1086/profile" id="nav-profile" class="nav-link desktop-only">Profile</a>
-            <a href="/att1086/" id="nav-signin" class="nav-link nav-logout desktop-only">Logout</a>
+            
+            <!-- desktop logout -->
+            <a href="{{ url_for('auth') }}" id="nav-signin" class="nav-link nav-logout desktop-only">Logout</a>
         </div>
     </nav>
 
