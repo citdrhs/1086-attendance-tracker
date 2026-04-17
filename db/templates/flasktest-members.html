@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- basic setup -->
     <meta charset="UTF-8">
+    
+    <!-- responsive screen settings -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- page title -->
     <title>Members</title>
 </head>
 <body>
+    
+    <!-- members table -->
     <table>
+        
+        <!-- table headers -->
         <tr>
             <th>Name</th>
             <th>Email</th>
@@ -14,6 +23,7 @@
             <th>Status</th>
         </tr>
 
+        <!-- loop through members -->
         {% for member in members %}
         <tr>
             <td>{{ member.username }}</td>

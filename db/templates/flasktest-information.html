@@ -1,35 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- basic setup -->
     <meta charset="UTF-8">
+    
+    <!-- makes site responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- page title -->
     <title>Information</title>
+    
+    <!-- css file -->
     <link rel="stylesheet" href="/static/flasktest-style.css">
+    
+    <!-- google font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    
+    <!-- navbar -->
     <nav class="navbar">
         <div class="nav-container">
+            
+            <!-- brand name -->
             <div class="nav-brand">Blue Cheese Robotics</div>
+            
+            <!-- mobile menu button -->
             <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
+            
+            <!-- navigation links -->
             <ul class="nav-menu">
                 <li><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
                 <li><a href="{{ url_for('information') }}" class="nav-link active">Information</a></li>
                 <li><a href="{{ url_for('camera') }}" class="nav-link">Camera</a></li>
                 <li><a href="{{ url_for('admin') }}" class="nav-link">Admin Panel</a></li>
+                
+                <!-- mobile only links -->
                 <li class="mobile-only"><a href="{{ url_for('profile') }}" class="nav-link nav-logout">Profile</a></li>
-                <li class="mobile-only"><a href="{{ url_for('auth') }}" class="nav-link nav-logout">Sign In</a></li>
+                <li class="mobile-only"><a href="{{ url_for('auth') }}" class="nav-link nav-logout">Logout</a></li>
             </ul>
+            
+            <!-- desktop links -->
             <a href="{{ url_for('profile') }}" id="nav-profile" class="nav-link nav-logout desktop-only">Profile</a>
-            <a href="{{ url_for('auth') }}" id="nav-signin" class="nav-link nav-logout desktop-only">Sign In</a>
+            <a href="{{ url_for('auth') }}" id="nav-signin" class="nav-link nav-logout desktop-only">Logout</a>
         </div>
     </nav>
 
+    <!-- main content -->
     <main class="main-content">
         <div class="hero-section">
+            
+            <!-- logo -->
             <img src="/static/logo.png" alt="Blue Cheese Robotics Logo" class="logo">
+            
+            <!-- title -->
             <h1 class="title">Information</h1>
             <p class="subtitle">1086 Attendance Tracker</p>
+            
+            <!-- rules text -->
             <div class="information-paragraph">
                 <p> If you are a VETERAN, you need to attend 7 amount of meetings every 2 weeks.  </p>
                 <p> If you are a ROOKIE, you need to attend 5 amount of meetings every 2 weeks.  </p>
@@ -38,6 +66,7 @@
     </main>
 
     <script>
+        // opens/closes mobile menu
         function toggleMenu() {
             const navMenu = document.querySelector('.nav-menu');
             navMenu.classList.toggle('open');

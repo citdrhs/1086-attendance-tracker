@@ -1,51 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- basic setup stuff -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- tab name -->
   <title>Admin 1086</title>
+  
+  <!-- css -->
   <link rel="stylesheet" href="{{ url_for('static', filename='flasktest-admin.css') }}">
+  
+  <!-- calendar thing -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+  
+  <!-- javascript -->
   <script src="{{ url_for('static', filename='flasktest-admin.js') }}" defer></script>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- login screen -->
 <div id="login">
   <div class="login-box">
+    <!-- logo -->
     <img src="{{ url_for('static', filename='admin_logo.png') }}" alt="Blue Cheese Robotics Logo" class="login-logo">
+    
     <h1>Admin</h1>
     <p>1086 Robotics</p>
+    
+    <!-- shows if password wrong -->
     <p class="err" id="err">Incorrect password. Please Try again.</p>
+    
+    <!-- password input -->
     <label class="field-label">Password</label>
     <input type="password" id="pw" placeholder="Enter password" />
     <button onclick="login()">Enter →</button>
 
+    <!-- back link -->
     <p id="backBtn" class="small">
       <a href="{{ url_for('home') }}">Back to home</a>
     </p>
   </div>
 </div>
 
-<!-- APP -->
+<!-- main part of site -->
 <div id="app">
   <header>
     <div class="brand">
+      <!-- same logo again -->
       <img src="{{ url_for('static', filename='admin_logo.png') }}" alt="Blue Cheese Robotics Logo" class="brand img">
     </div>
+    
+    <!-- tabs at top -->
     <div class="tabs">
       <button class="tab active" onclick="tab('members',this)">Members</button>
       <button class="tab" onclick="tab('atrisk',this)">At-Risk</button>
       <button class="tab" onclick="tab('report',this)">2-Week Report</button>
       <button class="tab" onclick="tab('calendar',this)">Calendar</button>
     </div>
+    
+    <!-- menu + logout -->
     <div class="header-right">
       <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
       <button class="logout" onclick="logout()">Logout</button>
     </div>
   </header>
 
+  <!-- filter stuff -->
   <div class="toolbar">
     <select id="fSub" onchange="filter()">
       <option value="">All Subteams</option>
@@ -57,20 +79,25 @@
       <option>Impact</option>
       <option>Outreach</option>
     </select>
+    
     <select id="fType" onchange="filter()">
       <option value="">Veteran & Rookie</option>
       <option value="Veteran">Veteran</option>
       <option value="Rookie">Rookie</option>
     </select>
+    
+    <!-- search -->
     <input id="fSearch" placeholder="Search name..." oninput="filter()" style="width:180px">
   </div>
 
   <div class="content">
 
-    <!-- MEMBERS -->
+    <!-- members section -->
     <div id="sec-members" class="section active">
       <div class="card">
         <div class="card-head"><h2>All Members</h2></div>
+        
+        <!-- table -->
         <div class="table-wrap">
           <table>
             <thead>
@@ -88,13 +115,17 @@
       </div>
     </div>
 
+    <!-- popup when u click a person -->
     <div id="profileModal" class="profile-modal">
       <div class="profile-card">
         <span class="close-btn">&times;</span>
+        
         <div class="profile-header">
           <h2 id="profileName"></h2>
           <span id="profileType" class="type-badge"></span>
         </div>
+        
+        <!-- edit info -->
         <div class="profile-body">
           <p>
             <strong>Grade:</strong>
@@ -115,13 +146,15 @@
       </div>
     </div>
 
-    <!-- AT-RISK -->
+    <!-- at risk people -->
     <div id="sec-atrisk" class="section">
       <div class="card">
         <div class="card-head">
           <h2>At-Risk Members</h2>
           <span>Sorted by severity</span>
         </div>
+        
+        <!-- table -->
         <div class="table-wrap">
           <table>
             <thead>
@@ -139,16 +172,20 @@
       </div>
     </div>
 
-    <!-- 2-WEEK REPORT -->
+    <!-- report -->
     <div id="sec-report" class="section">
       <div class="card">
         <div class="card-head">
           <h2>2-Week Report</h2>
           <span id="reportSummary"></span>
         </div>
+        
+        <!-- download button -->
         <div style="padding:0.75rem 1.25rem;background:#e8edf7;border-bottom:1px solid #d1d9ef;display:flex;justify-content:flex-end;flex-wrap:wrap;gap:0.5rem">
           <button onclick="downloadReport()" style="background:#1e3a8a;color:#fbbf24;border:none;border-radius:5px;padding:0.4rem 1rem;font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer">↓ Download CSV file</button>
         </div>
+        
+        <!-- table -->
         <div class="table-wrap">
           <table>
             <thead>
@@ -167,17 +204,25 @@
       </div>
     </div>
 
-    <!-- CALENDAR VIEW -->
+    <!-- calendar section -->
     <div id="sec-calendar" class="section">
       <section class="calendar-section">
         <div class="calendar-header">ATTENDANCE CALENDAR</div>
+        
+        <!-- calendar stuff -->
         <div id="calendar"></div>
       </section>
+      
+      <!-- popup for events -->
       <div id="eventModal" class="modal hidden">
         <div class="modal-content">
           <span class="close-btn" id="closeModal">&times;</span>
           <h2 id="modalTitle">Meeting Info</h2>
+          
+          <!-- date -->
           <p><strong>Date:</strong> <span id="modalDate"></span></p>
+          
+          <!-- people list -->
           <h3>Attendees</h3>
           <ul id="attendeeList"></ul>
         </div>

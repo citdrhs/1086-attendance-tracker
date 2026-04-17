@@ -13,15 +13,15 @@
             <div class="nav-brand">Blue Cheese Robotics</div>
             <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
             <ul class="nav-menu">
-                <li><a href="{{ url_for('home') }}" class="nav-link active">Home</a></li>
-                <li><a href="{{ url_for('information') }}" class="nav-link">Information</a></li>
-                <li><a href="{{ url_for('camera') }}" class="nav-link">Camera</a></li>
-                <li><a href="{{ url_for('admin') }}" class="nav-link">Admin Panel</a></li>
-                <li class="mobile-only"><a href="{{ url_for('profile') }}" class="nav-link">Profile</a></li>
-                <li class="mobile-only"><a href="{{ url_for('auth') }}" class="nav-link nav-logout">Sign In</a></li>
+                <li><a href="/att1086/home" class="nav-link active">Home</a></li>
+                <li><a href="/att1086/information" class="nav-link">Information</a></li>
+                <li><a href="/att1086/camera" class="nav-link">Camera</a></li>
+                <li><a href="/att1086/admin" class="nav-link">Admin Panel</a></li>
+                <li class="mobile-only"><a href="/att1086/profile" class="nav-link">Profile</a></li>
+                <li class="mobile-only"><a href="/att1086/" class="nav-link nav-logout">Logout</a></li>
             </ul>
-            <a href="{{ url_for('profile') }}" id="nav-profile" class="nav-link desktop-only">Profile</a>
-            <a href="{{ url_for('auth') }}" id="nav-signin" class="nav-link nav-logout desktop-only">Sign In</a>
+            <a href="/att1086/profile" id="nav-profile" class="nav-link desktop-only">Profile</a>
+            <a href="/att1086/" id="nav-signin" class="nav-link nav-logout desktop-only">Logout</a>
         </div>
     </nav>
 
@@ -31,7 +31,7 @@
             <h1 class="title">1086 Attendance Tracker</h1>
             <p class="subtitle">Deep Run High School</p>
             <div class="button-container">
-                <a href="{{ url_for('camera') }}" class="btn btn-primary" style="background: #facc15; color: #fff;">Check In</a>
+                <a href="/att1086/checkin" class="btn btn-primary" style="background: #facc15; color: #fff;">Check In</a>
             </div>
         </div>
     </main>

@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// CALENDAR VIEW
+// CALENDAR VIEW - replace with actual database stuff
 const events = [
   {
     title: "Programming Meeting",
