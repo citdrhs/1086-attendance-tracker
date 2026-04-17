@@ -1,37 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- basic setup -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        <!-- page title -->
         <title>Login / Sign Up</title>
+        
+        <!-- css -->
         <link rel="stylesheet" href="/static/flasktest-auth.css" />
     </head>
 <body>
+    <!-- main card -->
     <main class="card">
         <h1 id="title">Welcome</h1>
 
+        <!-- tabs to switch -->
         <div class="tabs">
             <button id="tabLogin" class="tab active" type="button">Login</button> 
             <button id="tabSignup" class="tab" type="button">Sign Up</button> 
         </div>
 
+        <!-- form -->
         <form id="form" class="form" action="{{ url_for('api_signup') }}" method="post">
+            
+            <!-- username -->
             <label>
                 Username
                 <input id="username" type="text" autocomplete="username" name="username" required/>
             </label>
+
+            <!-- only shows on signup -->
             <label class="signup-only">
                 Full Name
                 <input id="name" type="text" autocomplete="name" name="name"/>
             </label>
+
+            <!-- email -->
             <label class="signup-only">
                  Email (hcps)
                  <input id="email" type="email" autocomplete="email" name="email"/>
              </label>
+
+             <!-- password -->
              <label>
                 Password
                 <input id="password" type="password" autocomplete="password" name="password" required/>
             </label>
+
+            <!-- choose subteam -->
             <div class="checkbox-group signup-only" name="subteam">
                 <label>Subteam</label>
                 
@@ -71,6 +89,8 @@
                 </label>
 
             </div>
+
+            <!-- grade dropdown -->
             <label class="signup-only">
                 Grade
                 <select id="grade" name="grade">   <!-- dropdown for grade !-->
@@ -81,6 +101,8 @@
                     <option value="12">12th</option>
                 </select>
             </label>
+
+            <!-- veteran or rookie -->
             <label class="signup-only">
                 Veteran or Rookie
                 <select id="member-type" name="status">
@@ -95,12 +117,15 @@
         
         </form>
 
+        <!-- button to submit / go back -->
         <a href="{{ url_for('home') }}" class="nav-link active">
             <button id="submitBtn" class="primary login-only" type="button">Login</button>
             <p id="msg" class="msg" aria-live="polite"></p>
         </a>
 
     </main>
+
+    <!-- js -->
     <script src="/static/flasktest-auth.js"></script>
 </body>
 </html>
