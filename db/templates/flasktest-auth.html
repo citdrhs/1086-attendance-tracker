@@ -9,12 +9,12 @@
         <title>Login / Sign Up</title>
         
         <!-- css -->
-        <link rel="stylesheet" href="/static/flasktest-auth.css" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='flasktest-auth.css') }}" />
     </head>
 <body>
     <!-- main card -->
     <main class="card">
-        <h1 id="title">Welcome - 1086 Attendance</h1>
+        <h1 id="title">Welcome </h1>
 
         <!-- tabs to switch -->
         <div class="tabs">
@@ -126,6 +126,6 @@
     </main>
 
     <!-- js -->
-    <script src="/static/flasktest-auth.js"></script>
+    <script src="{{ url_for('static', filename='flasktest-auth.js') }}"></script>
 </body>
 </html>

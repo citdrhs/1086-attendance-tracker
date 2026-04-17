@@ -11,7 +11,7 @@
     <title>Check In</title>
     
     <!-- css -->
-    <link rel="stylesheet" href="./static/flasktest-style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='flasktest-style.css') }}">
     
     <!-- font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -27,15 +27,15 @@
             
             <!-- nav links -->
             <ul class="nav-menu">
-                <li><a href="./home" class="nav-link">Home</a></li>
-                <li><a href="./information" class="nav-link">Information</a></li>
-                <li><a href="./camera" class="nav-link">Camera</a></li>
-                <li><a href="./admin" class="nav-link">Admin Panel</a></li>
+                <li><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
+                <li><a href="{{ url_for('information') }}" class="nav-link">Information</a></li>
+                <li><a href="{{ url_for('camera') }}" class="nav-link">Camera</a></li>
+                <li><a href="{{ url_for('admin') }}" class="nav-link">Admin Panel</a></li>
             </ul>
-            
+
             <!-- profile + signin -->
-            <a href="./profile" id="nav-profile" class="nav-link nav-logout">Profile</a>
-            <a href="./" id="nav-signin" class="nav-link nav-logout">Sign In</a>
+            <a href="{{ url_for('profile') }}" id="nav-profile" class="nav-link nav-logout">Profile</a>
+            <a href="{{ url_for('auth') }}" id="nav-signin" class="nav-link nav-logout">Sign In</a>
         </div>
     </nav>
 
@@ -44,7 +44,7 @@
         <div class="hero-section">
             
             <!-- logo -->
-            <img src="./static/logo.png" alt="Blue Cheese Robotics Logo" class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Blue Cheese Robotics Logo" class="logo">
             
             <!-- title -->
             <h1 class="title">Check In</h1>
@@ -75,7 +75,7 @@
     </main>
 
     <!-- scripts -->
-    <script src="./static/flasktest-submit.js"></script>
-    <script src="./static/flasktest-nav.js"></script>
+    <script src="{{ url_for('static', filename='flasktest-submit.js') }}"></script>
+    <script src="{{ url_for('static', filename='flasktest-nav.js') }}"></script>
 </body>
 </html>
