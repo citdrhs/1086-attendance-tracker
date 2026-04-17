@@ -22,27 +22,27 @@ function toggleSignupFields(show) {
 
 
 // ---------------- SWITCH MODE ----------------
-function setMode(next) {
+function setMode(next) { //switch between login and signup UI
   mode = next;
-  msg.textContent = "";
+  msg.textContent = ""; //clears previous messages
 
   if (mode === "login") {
     tabLogin.classList.add("active");
     tabSignup.classList.remove("active");
 
     toggleSignupFields(false);
-
+    //update UI text
     submitBtn.textContent = "Login";
     title.textContent = "Welcome";
     document.getElementById("password").autocomplete = "current-password";
 
   } else {
-    tabSignup.classList.add("active");
+    tabSignup.classList.add("active"); //highlights signup tab
     tabLogin.classList.remove("active");
 
     toggleSignupFields(true);
 
-    submitBtn.textContent = "Create Account";
+    submitBtn.textContent = "Create Account"; //updates UI text
     title.textContent = "Sign Up";
     document.getElementById("password").autocomplete = "new-password";
   }
@@ -57,7 +57,7 @@ tabSignup.addEventListener("click", () => setMode("signup"));
 // ---------------- FORM SUBMIT ----------------
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  msg.textContent = "Working...";
+  msg.textContent = "Working..."; //shows loading message
 
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
@@ -72,10 +72,10 @@ form.addEventListener("submit", async (e) => {
   const checked = document.querySelectorAll('input[name="subteam"]:checked');
   const subteams = Array.from(checked).map(cb => cb.value);
 
-  const memberTypeField = document.getElementById("member-type");
+  const memberTypeField = document.getElementById("member-type"); //member typs
   const memberType = memberTypeField ? memberTypeField.value.trim() : "";
 
-  const gradeField = document.getElementById("grade");
+  const gradeField = document.getElementById("grade"); //grade converted to a number or null
   const grade = gradeField ? parseInt(gradeField.value) || null : null;
 
   try {
@@ -84,7 +84,7 @@ form.addEventListener("submit", async (e) => {
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(
+        body: JSON.stringify( //sends different data depending on login vs signup
           mode === "login"
             ? { username, password }
             : { username, name, password, email, subteams, memberType, grade }
@@ -101,7 +101,7 @@ form.addEventListener("submit", async (e) => {
 
     msg.textContent = "Success! Redirecting...";
     if (mode === "login" && data.member_id) {
-      localStorage.setItem("member_id", data.member_id);
+      localStorage.setItem("member_id", data.member_id); //stores member ID if logging in
     }
     window.location.href = "/att1086/home";
 
