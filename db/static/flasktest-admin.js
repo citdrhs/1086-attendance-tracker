@@ -5,17 +5,17 @@ const ROO_MIN = 5;
 
 let all = [], shown = [];
 
-// login for admin
+// login and logout for admin
 
 function login() {
-  if (document.getElementById('pw').value !== PWD) {
+  if (document.getElementById('pw').value !== PWD) { //shows error and resets input if password is incorrect
     document.getElementById('err').style.display = 'block';
     document.getElementById('pw').value = '';
     return;
   }
   document.getElementById('login').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
-  loadMembers();
+  loadMembers(); //loads member data
 }
 
 function logout() {
@@ -25,7 +25,7 @@ function logout() {
   document.getElementById('err').style.display = 'none';
 }
 
-document.addEventListener('DOMContentLoaded', () =>
+document.addEventListener('DOMContentLoaded', () => //allows pressing enter to log in
   document.getElementById('pw').addEventListener('keydown', e => e.key === 'Enter' && login())
 );
 
@@ -33,10 +33,10 @@ document.addEventListener('DOMContentLoaded', () =>
 
 async function loadMembers() {
   const res = await fetch('/api/members');
-  all = await res.json();
-  shown = [...all];
+  all = await res.json(); //stores full dataset
+  shown = [...all]; 
   render();
-  renderReport();
+  renderReport(); //renders table and view
 }
 
 // tabs and filters
@@ -48,7 +48,7 @@ function tab(id, btn) {
   btn.classList.add('active');
 }
 
-function filter() {
+function filter() { //filters members based on dropdown and search
   const sub  = document.getElementById('fSub').value;
   const type = document.getElementById('fType').value;
   const s    = document.getElementById('fSearch').value.toLowerCase();
@@ -62,14 +62,14 @@ function filter() {
 
 // rendering
 
-function typeBadge(t) {
+function typeBadge(t) { //returns HTML for member type
   return t === 'Veteran'
     ? '<span class="badge b-blue">Veteran</span>'
     : '<span class="badge b-gray">Rookie</span>';
 }
 
-function riskBadge(n) {
-  const pct = n / TOTAL;
+function riskBadge(n) { //returns risk level based on attendance percentage
+  const pct = n / TOTAL; 
   if (pct < 0.3) return '<span class="badge b-red">High</span>';
   if (pct < 0.5) return '<span class="badge b-orange">Medium</span>';
   return '<span class="badge b-yellow">Low</span>';
@@ -85,7 +85,7 @@ function render() {
       <td>${m.actual_n} / ${TOTAL}</td>
     </tr>`).join('') || `<tr><td colspan="5" class="empty">No results found.</td></tr>`;
 
-  const risks = [...shown.filter(m => m.risk)].sort((a, b) => a.actual_n - b.actual_n);
+  const risks = [...shown.filter(m => m.risk)].sort((a, b) => a.actual_n - b.actual_n); //at-risk members sorted by lowest attendance
   document.getElementById('tRisk').innerHTML = risks.length
     ? risks.map(m => `<tr>
         <td><strong>${m.name}</strong></td>
@@ -100,20 +100,20 @@ function render() {
 
 
 
-function getStatus(m) {
+function getStatus(m) { //finds if a member is passing, at-risk, or failing
   const min = m.type === 'Veteran' ? VET_MIN : ROO_MIN;
   if (m.actual_n > min)   return 'Passing';
   if (m.actual_n === min) return 'At-Risk';
   return 'Failing';
 }
 
-function renderReport() {
+function renderReport() { //renders full report with status
   const sorted = [...all].sort((a, b) => {
     const order = { 'Failing': 0, 'At-Risk': 1, 'Passing': 2 };
     return order[getStatus(a)] - order[getStatus(b)];
   });
 
-  document.getElementById('tReport').innerHTML = sorted.map(m => {
+  document.getElementById('tReport').innerHTML = sorted.map(m => { //builds report table
     const status = getStatus(m);
     const min = m.type === 'Veteran' ? VET_MIN : ROO_MIN;
     const statusBadge =
@@ -129,7 +129,7 @@ function renderReport() {
       <td>${statusBadge}</td>
     </tr>`;
   }).join('');
-
+  //summary counts
   const passing = sorted.filter(m => getStatus(m) === 'Passing').length;
   const atrisk  = sorted.filter(m => getStatus(m) === 'At-Risk').length;
   const failing = sorted.filter(m => getStatus(m) === 'Failing').length;
@@ -141,7 +141,7 @@ function renderReport() {
 //  window.open('/api/report');
 //}
 
-function downloadReport() {
+function downloadReport() { //generates and downloads reports as a csv
   const headers = ['Name', 'Grade', 'Subteam', 'Type', 'Attended', 'Required', 'Total', 'Status', 'At Risk'];
 
   const escape = (val) => {
@@ -149,7 +149,7 @@ function downloadReport() {
     return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
   };
 
-  const rows = all.map(m => {
+  const rows = all.map(m => { //builds rows
     const status = getStatus(m);
     const required = m.type === 'Veteran' ? VET_MIN : ROO_MIN;
     return [
@@ -165,7 +165,7 @@ function downloadReport() {
     ].map(escape).join(',');
   });
 
-  const csv = [headers.join(','), ...rows].join('\n');
+  const csv = [headers.join(','), ...rows].join('\n'); //creates downloadable file
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
 
@@ -180,7 +180,7 @@ function downloadReport() {
 }
 
 // profile card 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () { //shows member details when a row is clicked
   const profileModal = document.getElementById("profileModal");
   const tMembers = document.getElementById("tMembers");
   const profileCloseBtn = profileModal.querySelector(".close-btn");
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const row = e.target.closest("tr");
     if (!row) return;
 
-    document.querySelectorAll("#tMembers tr").forEach(r => r.classList.remove("selected"));
+    document.querySelectorAll("#tMembers tr").forEach(r => r.classList.remove("selected")); //highlights selected row
     row.classList.add("selected");
 
     const cells = row.querySelectorAll("td");
@@ -224,7 +224,7 @@ const attendeeList = document.getElementById("attendeeList");
 
 let calendar;
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () { //initializes calender and loads events
   const calendarEl = document.getElementById('calendar');
 
   calendar = new FullCalendar.Calendar(calendarEl, {
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(successCallback)
         .catch(failureCallback);
     },
-    eventClick: function(info) {
+    eventClick: function(info) { //shows modal when event is clicked
       modalTitle.textContent = info.event.title;
 
       const date = new Date(info.event.start);
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
   calendar.render();
 });
 
-function tab(id, btn) {
+function tab(id, btn) { //handles tab switching and mobile behavior
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
 
@@ -283,7 +283,7 @@ function toggleMenu() {
   tabs.classList.toggle('open');
 }
 
-function editField(id) {
+function editField(id) { //allows editing a field inline
   const span = document.getElementById(id);
   const currentValue = span.textContent;
 
