@@ -31,7 +31,9 @@ load_dotenv()
 
 
 # creating the flask application instance
-app = Flask(__name__, static_folder='static', static_url_path='/static')
+app = Flask(__name__, 
+            static_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static'),
+            static_url_path='/static')
 
 
 
