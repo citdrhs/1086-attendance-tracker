@@ -1,41 +1,71 @@
 
 <html> 
 <head> 
+    <!-- makes it responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- page name -->
     <title>Test</title> 
+    
+    <!-- css -->
     <link rel="stylesheet" href="/static/flasktest-camStyle.css"> 
+    
+    <!-- qr scanner library -->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 </head> 
 <body> 
+    
+    <!-- navbar -->
     <nav class="navbar">
         <div class="nav-container">
+            
+            <!-- site name -->
             <div class="nav-brand">Blue Cheese Robotics</div>
+            
+            <!-- menu button -->
             <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
+            
+            <!-- links -->
             <ul class="nav-menu">
                 <li><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
                 <li><a href="{{ url_for('information') }}" class="nav-link">Information</a></li>
                 <li><a href="{{ url_for('camera') }}" class="nav-link active">Camera</a></li>
                 <li><a href="{{ url_for('admin') }}" class="nav-link">Admin Panel</a></li>
+                
+                <!-- only shows on phone -->
                 <li class="mobile-only"><a href="{{ url_for('profile') }}" class="nav-link nav-logout">Profile</a></li>
                 <li class="mobile-only"><a href="{{ url_for('auth') }}" class="nav-link nav-logout">Logout</a></li>
             </ul>
+            
+            <!-- desktop buttons -->
             <a href="{{ url_for('profile') }}" id="nav-profile" class="nav-link nav-logout desktop-only">Profile</a>
             <a href="{{ url_for('auth') }}" id="nav-signin" class="nav-link nav-logout desktop-only">Logout</a>
         </div>
     </nav>
+
+    <!-- camera feed -->
     <video id="cameraFeed" autoplay></video> 
+    
+    <!-- qr scanner -->
     <div id="reader"></div>
+    
+    <!-- result shows here -->
     <div id="result"></div>
      
     <script>
+        // opens/closes menu
         function toggleMenu() {
             const navMenu = document.querySelector('.nav-menu');
             navMenu.classList.toggle('open');
         }
 
+        // check if phone
         const isMobile = window.innerWidth <= 768;
+        
+        // size of qr box
         const qrBoxSize = isMobile ? 200 : 250;
 
+        // setup scanner
         const scanner = new Html5QrcodeScanner('reader', {
         qrbox: {
             width: qrBoxSize,
@@ -45,19 +75,25 @@
     });
        
 
+        // start scanner
         scanner.render(success, error); 
 
+        // when scan works
         function success(result) { 
             
             document.getElementById('result').innerHTML = `
                 <h2>Success!</h2>
                 <p><a href="${result}">${result}</a></p>
             `;
+            
+            // stop scanner
             scanner.clear();
             
+            // remove scanner box
             document.getElementById('reader').remove();
         }
 
+        // if error
         function error (err){
             console.error(err)
         }
